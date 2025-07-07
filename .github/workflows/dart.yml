@@ -12,125 +12,62 @@ jobs:
           channel: stable
           architecture: x64
       
-      # Clean iOS build artifacts
-      - run: flutter clean
-        working-directory: mobileapp
-      
-      # Run flutter pub get inside mobileapp
-      - run: flutter pub get
-        working-directory: mobileapp
-      
-      # Check Firebase versions and fix compatibility issues
-      - name: Fix Firebase and Google Sign-In compatibility
+      - name: Set up environment
         run: |
           cd mobileapp
-          echo "Current Firebase dependencies:"
-          grep firebase pubspec.yaml
-          
-          # Use compatible Firebase and Google Sign-In versions
-          echo "Updating to compatible Firebase and Google Sign-In versions..."
-          sed -i '' 's/firebase_core: \^3.14.0/firebase_core: ^2.24.2/' pubspec.yaml
-          sed -i '' 's/firebase_messaging: \^15.2.7/firebase_messaging: ^14.7.9/' pubspec.yaml
-          sed -i '' 's/cloud_firestore: \^5.6.9/cloud_firestore: ^4.13.6/' pubspec.yaml
-          sed -i '' 's/firebase_auth: \^5.6.0/firebase_auth: ^4.15.3/' pubspec.yaml
-          sed -i '' 's/google_sign_in: \^6.1.6/google_sign_in: ^6.1.5/' pubspec.yaml
-          
-          echo "Updated dependencies:"
-          grep -E "(firebase|google_sign_in)" pubspec.yaml
+          flutter clean
+          flutter pub get
       
-      # Run pub get again with updated Firebase versions
-      - run: flutter pub get
-        working-directory: mobileapp
-      
-      # Remove old pods and Podfile.lock
-      - run: rm -rf Pods Podfile.lock
-        working-directory: mobileapp/ios
-      
-      # Clean CocoaPods cache
-      - run: pod cache clean --all
-        working-directory: mobileapp/ios
-      
-      # Ensure Podfile exists
-      - name: Ensure Podfile exists
-        run: |
-          cd mobileapp/ios
-          if [ ! -f Podfile ]; then
-            pod init
-          fi
-      
-      # Create a backup and modify Podfile
       - name: Configure Podfile
         run: |
           cd mobileapp/ios
+          # Ensure Podfile exists
+          if [ ! -f Podfile ]; then
+            pod init
+          fi
+          
+          # Backup original Podfile
           cp Podfile Podfile.backup
           
-          # Explicitly set iOS platform version at the top of Podfile
-          if grep -q "platform :ios" Podfile; then
-            sed -i '' "s/platform :ios.*/platform :ios, '13.0'/" Podfile
-          else
-            sed -i '' '1i\
-          platform :ios, '"'"'13.0'"'"'\
-          ' Podfile
-          fi
+          # Add platform and Firebase version constraints
+          cat > Podfile << 'EOF'
+          platform :ios, '13.0'
+          $FirebaseSDKVersion = '10.20.0'
           
-          # Remove existing post_install if it exists and add our own
-          if grep -q "post_install do" Podfile; then
-            echo "Removing existing post_install hook..."
-            sed -i '' '/post_install do/,/^end$/d' Podfile
-          fi
-          
-          # Add our post_install block with updated deployment target
-          cat >> Podfile << 'EOF'
+          # Original Podfile content
+          $(tail -n +2 Podfile.backup)
           
           post_install do |installer|
             installer.pods_project.targets.each do |target|
               target.build_configurations.each do |config|
                 config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
                 config.build_settings['SWIFT_VERSION'] = '5.0'
-                # Fix for GoogleUtilities compatibility
-                config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
-                config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'PERMISSION_EVENTS=1'
+                config.build_settings['ENABLE_BITCODE'] = 'NO'
               end
             end
           end
           EOF
-          
-          echo "=== Final Podfile content ==="
-          cat Podfile
       
-      # Update CocoaPods repo & install pods
-      - run: pod repo update
-        working-directory: mobileapp/ios
-      
-      - run: pod install
-        working-directory: mobileapp/ios
-      
-      # Build iOS app (no signing)
-      - run: flutter build ios --release --no-codesign
-        working-directory: mobileapp
-      
-      # Create Payload folder
-      - run: mkdir Payload
-        working-directory: mobileapp/build/ios/iphoneos
-      
-      # Move Runner.app into Payload/
-      - run: mv Runner.app Payload/
-        working-directory: mobileapp/build/ios/iphoneos
-      
-      # Zip the Payload into an IPA
-      - name: Zip output
+      - name: Install pods
         run: |
-          cd mobileapp/build/ios/iphoneos
+          cd mobileapp/ios
+          pod repo update
+          pod install --repo-update
+      
+      - name: Build IPA
+        run: |
+          cd mobileapp
+          flutter build ios --release --no-codesign
+          cd build/ios/iphoneos
+          mkdir Payload
+          mv Runner.app Payload/
           zip -r FlutterIpaExport.ipa Payload
       
-      # Upload IPA to GitHub release
-      - name: Upload IPA to GitHub Release
+      - name: Upload IPA
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: mobileapp/build/ios/iphoneos/FlutterIpaExport.ipa
-          asset_name: FlutterIpaExport.ipa
+          asset_name: AppName-${{ github.run_number }}.ipa
           tag: ios-build-${{ github.run_number }}
           overwrite: true
-          body: |
-            🎉 iOS IPA build artifact for run #${{ github.run_number }}
