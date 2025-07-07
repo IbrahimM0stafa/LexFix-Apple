@@ -27,13 +27,13 @@ jobs:
           echo "Current Firebase dependencies:"
           grep firebase pubspec.yaml
           
-          # Use older compatible versions - Firebase that works with GoogleSignIn 7.x
-          echo "Updating to compatible Firebase and Google Sign-In versions..."
-          sed -i '' 's/firebase_core: \^3.14.0/firebase_core: ^2.17.0/' pubspec.yaml
-          sed -i '' 's/firebase_messaging: \^15.2.7/firebase_messaging: ^14.6.9/' pubspec.yaml
-          sed -i '' 's/cloud_firestore: \^5.6.9/cloud_firestore: ^4.9.3/' pubspec.yaml
-          sed -i '' 's/firebase_auth: \^5.6.0/firebase_auth: ^4.10.1/' pubspec.yaml
-          sed -i '' 's/google_sign_in: \^6.1.6/google_sign_in: ^6.1.5/' pubspec.yaml
+          # Use much older Firebase versions that use older Firebase SDK
+          echo "Updating to much older compatible Firebase and Google Sign-In versions..."
+          sed -i '' 's/firebase_core: \^3.14.0/firebase_core: ^2.10.0/' pubspec.yaml
+          sed -i '' 's/firebase_messaging: \^15.2.7/firebase_messaging: ^14.4.0/' pubspec.yaml
+          sed -i '' 's/cloud_firestore: \^5.6.9/cloud_firestore: ^4.5.0/' pubspec.yaml
+          sed -i '' 's/firebase_auth: \^5.6.0/firebase_auth: ^4.4.0/' pubspec.yaml
+          sed -i '' 's/google_sign_in: \^6.1.6/google_sign_in: ^6.0.2/' pubspec.yaml
           
           echo "Updated dependencies:"
           grep -E "(firebase|google_sign_in)" pubspec.yaml
@@ -64,11 +64,13 @@ jobs:
           cd mobileapp/ios
           cp Podfile Podfile.backup
           
-          # Set iOS platform version to 12.0 (compatible with older GoogleSignIn)
+          # Explicitly set iOS platform version at the top of Podfile
           if grep -q "platform :ios" Podfile; then
-            sed -i '' "s/platform :ios.*/platform :ios, '12.0'/" Podfile
+            sed -i '' "s/platform :ios.*/platform :ios, '11.0'/" Podfile
           else
-            echo "platform :ios, '12.0'" >> Podfile
+            sed -i '' '1i\
+platform :ios, '"'"'11.0'"'"'\
+' Podfile
           fi
           
           # Remove existing post_install if it exists and add our own
@@ -83,7 +85,7 @@ jobs:
           post_install do |installer|
             installer.pods_project.targets.each do |target|
               target.build_configurations.each do |config|
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
                 config.build_settings['SWIFT_VERSION'] = '5.0'
               end
             end
