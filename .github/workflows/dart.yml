@@ -73,13 +73,17 @@ jobs:
           
           # Add explicit pod version constraints before target
           if ! grep -q "pod 'GoogleUtilities'" Podfile; then
-            # Find the line with 'target' and add pod constraints before it
-            sed -i '' '/^target /i\
-# Explicit pod version constraints for compatibility\
-pod '\''GoogleUtilities'\'', '\''~> 7.12'\''\
-pod '\''GoogleSignIn'\'', '\''~> 7.0'\''\
-\
-' Podfile
+            # Create a temporary file with the pod constraints
+            cat > pod_constraints.txt << 'EOF'
+          # Explicit pod version constraints for compatibility
+          pod 'GoogleUtilities', '~> 7.12'
+          pod 'GoogleSignIn', '~> 7.0'
+          
+          EOF
+            
+            # Find the line with 'target' and insert the pod constraints before it
+            sed -i '' '/^target /r pod_constraints.txt' Podfile
+            rm pod_constraints.txt
           fi
           
           # Remove existing post_install if it exists and add our own
@@ -89,24 +93,26 @@ pod '\''GoogleSignIn'\'', '\''~> 7.0'\''\
           fi
           
           # Add our post_install block
-          echo "" >> Podfile
-          echo "post_install do |installer|" >> Podfile
-          echo "  installer.pods_project.targets.each do |target|" >> Podfile
-          echo "    target.build_configurations.each do |config|" >> Podfile
-          echo "      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'" >> Podfile
-          echo "      config.build_settings['SWIFT_VERSION'] = '5.0'" >> Podfile
-          echo "    end" >> Podfile
-          echo "  end" >> Podfile
-          echo "  # Force compatible GoogleUtilities version" >> Podfile
-          echo "  installer.pods_project.targets.each do |target|" >> Podfile
-          echo "    if target.name == 'GoogleUtilities'" >> Podfile
-          echo "      target.build_configurations.each do |config|" >> Podfile
-          echo "        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']" >> Podfile
-          echo "        config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'COCOAPODS=1'" >> Podfile
-          echo "      end" >> Podfile
-          echo "    end" >> Podfile
-          echo "  end" >> Podfile
-          echo "end" >> Podfile
+          cat >> Podfile << 'EOF'
+          
+          post_install do |installer|
+            installer.pods_project.targets.each do |target|
+              target.build_configurations.each do |config|
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+                config.build_settings['SWIFT_VERSION'] = '5.0'
+              end
+            end
+            # Force compatible GoogleUtilities version
+            installer.pods_project.targets.each do |target|
+              if target.name == 'GoogleUtilities'
+                target.build_configurations.each do |config|
+                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'COCOAPODS=1'
+                end
+              end
+            end
+          end
+          EOF
           
           echo "=== Final Podfile content ==="
           cat Podfile
