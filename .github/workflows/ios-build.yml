@@ -1,113 +1,82 @@
 name: iOS-ipa-build
+
 on:
-  workflow_dispatch:
+  workflow_dispatch:            # run manually from the Actions tab
+
 jobs:
   build-ios:
-    name: 🎉 iOS Build
-    runs-on: macos-latest
+    name: "🎉  iOS Build"
+    runs-on: macos-latest       # Xcode 15, Swift 5.9, CocoaPods pre-installed
+
     steps:
+      # 1  Check out code
       - uses: actions/checkout@v3
+
+      # 2  Install Flutter (stable)
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           architecture: x64
-      # Clean iOS build artifacts
-      - run: flutter clean
+
+      # 3  Clean + resolve pub packages
+      - name: Flutter clean / pub get
+        run: |
+          flutter clean
+          flutter pub get
         working-directory: mobileapp
-      # Run flutter pub get inside mobileapp
-      - run: flutter pub get
+
+      # 4  Reset Pods and be sure the Podfile targets iOS 13
+      - name: Prepare iOS folder
+        run: |
+          cd ios
+          rm -rf Pods Podfile.lock
+          [ -f Podfile ] || pod init
+          # Ensure: platform :ios, '13.0'
+          if grep -q "^platform :ios" Podfile; then
+            sed -i '' "s/^platform :ios.*/platform :ios, '13.0'/" Podfile
+          else
+            sed -i '' '1s/^/platform :ios, '\''13.0'\''\n/' Podfile
+          fi
         working-directory: mobileapp
-      # Remove old pods and Podfile.lock
-      - run: rm -rf Pods Podfile.lock
-        working-directory: mobileapp/ios
-      # Ensure Podfile exists
-      - name: Ensure Podfile exists
+
+      # 5  Add a fresh post_install block that forces Swift 5.9
+      - name: Patch Podfile for Swift 5.9
         run: |
           cd mobileapp/ios
-          if [ ! -f Podfile ]; then
-            pod init
-          fi
-      # Patch Podfile to set iOS platform 12.0 and fix Firebase pod versions
-      - name: Patch Podfile
-        run: |
-          cd mobileapp/ios
-          
-          # Set iOS platform version
-          if grep -q "platform :ios" Podfile; then
-            sed -i '' "s/platform :ios.*/platform :ios, '12.0'/" Podfile
-          else
-            echo "platform :ios, '12.0'" >> Podfile
-          fi
-          
-          # Check if post_install hook already exists
-          if grep -q "post_install do" Podfile; then
-            # If it exists, modify the existing one
-            # First, remove the existing 'end' for post_install
-            sed -i '' '/post_install do/,/^end$/{ /^end$/d; }' Podfile
-            
-            # Add our additional configuration before the final end
-            cat >> Podfile << 'EOF'
-            
-            # Set deployment target for all pods
-            installer.pods_project.targets.each do |target|
-              target.build_configurations.each do |config|
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-              end
-            end
-            
-            # Fix Firebase pod versions
-            installer.pod_targets.each do |pod|
-              if pod.name.eql?('FirebaseSharedSwift')
-                pod.version = '10.24.0'
-              end
-              if pod.name.eql?('FirebaseCoreInternal')
-                pod.version = '10.24.0'
-              end
-            end
-          end
-EOF
-          else
-            # If no post_install exists, create a new one
-            cat >> Podfile << 'EOF'
-          
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-    end
-  end
-  
-  installer.pod_targets.each do |pod|
-    if pod.name.eql?('FirebaseSharedSwift')
-      pod.version = '10.24.0'
-    end
-    if pod.name.eql?('FirebaseCoreInternal')
-      pod.version = '10.24.0'
-    end
-  end
-end
-EOF
-          fi
-      # Update CocoaPods repo & install pods
-      - run: pod repo update
+          # Remove any previous post_install
+          sed -i '' '/post_install do/,/^end$/d' Podfile
+          # Append a new one line-by-line (avoids YAML heredoc issues)
+          {
+            printf "\npost_install do |installer|\n"
+            printf "  installer.pods_project.targets.each do |target|\n"
+            printf "    target.build_configurations.each do |config|\n"
+            printf "      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'\n"
+            printf "      config.build_settings['SWIFT_VERSION']              = '5.9'\n"
+            printf "    end\n"
+            printf "  end\n"
+            printf "end\n"
+          } >> Podfile
+          echo "=== Podfile now ==="
+          cat Podfile
+
+      # 6  Install pods
+      - run: pod install --repo-update
         working-directory: mobileapp/ios
-      - run: pod install
-        working-directory: mobileapp/ios
-      # Build iOS app (no signing)
+
+      # 7  Build unsigned release
       - run: flutter build ios --release --no-codesign
         working-directory: mobileapp
-      # Create Payload folder
-      - run: mkdir Payload
-        working-directory: mobileapp/build/ios/iphoneos
-      # Move Runner.app into Payload/
-      - run: mv Runner.app Payload/
-        working-directory: mobileapp/build/ios/iphoneos
-      # Zip the Payload into an IPA
-      - name: Zip output
+
+      # 8  Package Runner.app → IPA
+      - name: Package IPA
         run: |
-          cd mobileapp/build/ios/iphoneos
+          cd build/ios/iphoneos
+          mkdir -p Payload
+          mv Runner.app Payload/
           zip -r FlutterIpaExport.ipa Payload
-      # Upload IPA to GitHub release
+        working-directory: mobileapp
+
+      # 9  Upload IPA to a release tagged for this run
       - name: Upload IPA to GitHub Release
         uses: svenstaro/upload-release-action@v2
         with:
@@ -117,4 +86,4 @@ EOF
           tag: ios-build-${{ github.run_number }}
           overwrite: true
           body: |
-            🎉 iOS IPA build artifact for run #${{ github.run_number }}
+            🎉 Unsigned iOS IPA for run #${{ github.run_number }}
