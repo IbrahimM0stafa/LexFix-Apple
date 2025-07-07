@@ -1,86 +1,68 @@
 name: iOS-ipa-build
+
 on:
   workflow_dispatch:
+
 jobs:
   build-ios:
-    name: 🎉 iOS Build
-    runs-on: macos-latest
+    name: "🎉  iOS Build"
+    runs-on: macos-latest   # Xcode 15 with SDK 11.x support
+
     steps:
+      # 1 Checkout
       - uses: actions/checkout@v3
+
+      # 2 Set up Flutter
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           architecture: x64
-      
-      # Clean workspace
+
+      # 3 Prep Flutter project
       - run: flutter clean
         working-directory: mobileapp
-      
-      # Get dependencies (creates pubspec.lock)
+
       - run: flutter pub get
         working-directory: mobileapp
-      
-      # Fix compatibility issues
-      - name: Resolve Firebase conflicts
+
+      # 4 Reset CocoaPods & make sure Podfile has the right platform
+      - name: Prepare iOS folder
         run: |
-          cd mobileapp
-          
-          # Update to compatible versions
-          flutter pub add \
-            firebase_core:^2.32.0 \
-            firebase_messaging:^14.7.10 \
-            cloud_firestore:^4.15.2 \
-            firebase_auth:^4.11.1 \
-            google_sign_in:^6.1.14
-          
-          # Force GoogleUtilities resolution
-          echo "Adding Podfile resolution rules..."
-          cat << EOF > ios/Podfile
-          platform :ios, '13.0'
-          # ... existing Podfile content ...
-          post_install do |installer|
-            installer.pods_project.targets.each do |target|
-              target.build_configurations.each do |config|
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-                # Resolve GoogleUtilities conflict
-                if target.name == 'GoogleUtilities'
-                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
-                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'DISABLE_FIREBASE_APPCHECK=1'
-                end
-              end
-            end
-          end
-          EOF
-        working-directory: mobileapp
-      
-      # Rebuild dependencies
-      - run: flutter pub get
-        working-directory: mobileapp
-      
-      # Pod setup
-      - run: |
           cd ios
-          pod install --repo-update
+          rm -rf Pods Podfile.lock
+          if [ ! -f Podfile ]; then
+            pod init
+          fi
+          # Ensure minimum iOS 13.0 (matches Firebase SDK 11)
+          sed -i '' "s/^platform :ios.*/platform :ios, '13.0'/" Podfile || \
+          sed -i '' '1s;^;platform :ios, '"'"'13.0'"'"'\n;' Podfile
         working-directory: mobileapp
-      
-      # Build IPA
+
+      # 5 Install pods (fresh repo update)
+      - run: pod install --repo-update
+        working-directory: mobileapp/ios
+
+      # 6 Build the app without codesign
       - run: flutter build ios --release --no-codesign
         working-directory: mobileapp
-      
-      # Package IPA
+
+      # 7 Package IPA
       - name: Package IPA
         run: |
-          cd mobileapp/build/ios/iphoneos
-          mkdir Payload
+          cd build/ios/iphoneos
+          mkdir -p Payload
           mv Runner.app Payload/
           zip -r FlutterIpaExport.ipa Payload
-      
-      # Upload artifact
-      - name: Upload IPA
+        working-directory: mobileapp
+
+      # 8 Upload to the build’s GitHub Release
+      - name: Upload IPA to GitHub Release
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: mobileapp/build/ios/iphoneos/FlutterIpaExport.ipa
-          asset_name: App-${{ github.run_number }}.ipa
+          asset_name: FlutterIpaExport.ipa
           tag: ios-build-${{ github.run_number }}
           overwrite: true
+          body: |
+            🎉 iOS IPA build artifact for run #${{ github.run_number }}
