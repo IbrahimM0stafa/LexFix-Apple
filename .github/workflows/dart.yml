@@ -70,41 +70,22 @@ jobs:
             echo "platform :ios, '12.0'" >> Podfile
           fi
           
-          # Check if post_install hook exists and modify accordingly
+          # Remove existing post_install if it exists and add our own
           if grep -q "post_install do" Podfile; then
-            echo "Post-install hook already exists, modifying..."
-            # Create a new Podfile with Swift version settings
-            cat > Podfile.new << 'EOF'
-EOF
-            # Copy everything before post_install
-            sed '/post_install do/,$d' Podfile >> Podfile.new
-            
-            # Add our post_install block
-            cat >> Podfile.new << 'EOF'
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-      config.build_settings['SWIFT_VERSION'] = '5.0'
-    end
-  end
-  flutter_additional_ios_build_settings(target)
-end
-EOF
-            mv Podfile.new Podfile
-          else
-            echo "No post_install hook found, adding one..."
-            echo "" >> Podfile
-            echo "post_install do |installer|" >> Podfile
-            echo "  installer.pods_project.targets.each do |target|" >> Podfile
-            echo "    target.build_configurations.each do |config|" >> Podfile
-            echo "      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'" >> Podfile
-            echo "      config.build_settings['SWIFT_VERSION'] = '5.0'" >> Podfile
-            echo "    end" >> Podfile
-            echo "  end" >> Podfile
-            echo "  flutter_additional_ios_build_settings(target)" >> Podfile
-            echo "end" >> Podfile
+            echo "Removing existing post_install hook..."
+            sed -i '' '/post_install do/,/^end$/d' Podfile
           fi
+          
+          # Add our post_install block
+          echo "" >> Podfile
+          echo "post_install do |installer|" >> Podfile
+          echo "  installer.pods_project.targets.each do |target|" >> Podfile
+          echo "    target.build_configurations.each do |config|" >> Podfile
+          echo "      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'" >> Podfile
+          echo "      config.build_settings['SWIFT_VERSION'] = '5.0'" >> Podfile
+          echo "    end" >> Podfile
+          echo "  end" >> Podfile
+          echo "end" >> Podfile
           
           echo "=== Final Podfile content ==="
           cat Podfile
