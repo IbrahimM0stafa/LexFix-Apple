@@ -11,15 +11,19 @@ jobs:
         with:
           channel: stable
           architecture: x64
+      
       # Clean iOS build artifacts
       - run: flutter clean
         working-directory: mobileapp
+      
       # Run flutter pub get inside mobileapp
       - run: flutter pub get
         working-directory: mobileapp
+      
       # Remove old pods and Podfile.lock
       - run: rm -rf Pods Podfile.lock
         working-directory: mobileapp/ios
+      
       # Ensure Podfile exists
       - name: Ensure Podfile exists
         run: |
@@ -27,10 +31,12 @@ jobs:
           if [ ! -f Podfile ]; then
             pod init
           fi
-      # Patch Podfile to set iOS platform 12.0 and fix Firebase pod versions
-      - name: Patch Podfile
+      
+      # Create a backup and modify Podfile
+      - name: Configure Podfile
         run: |
           cd mobileapp/ios
+          cp Podfile Podfile.backup
           
           # Set iOS platform version
           if grep -q "platform :ios" Podfile; then
@@ -39,74 +45,43 @@ jobs:
             echo "platform :ios, '12.0'" >> Podfile
           fi
           
-          # Check if post_install hook already exists
-          if grep -q "post_install do" Podfile; then
-            echo "Existing post_install hook found, modifying..."
-            # Remove the existing 'end' for post_install and add our config
-            sed -i '' '/post_install do/,/^end$/{/^end$/d;}' Podfile
-            
-            # Add our additional configuration
-            cat >> Podfile << 'EOF'
-            
-            # Set deployment target for all pods
-            installer.pods_project.targets.each do |target|
-              target.build_configurations.each do |config|
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-              end
-            end
-            
-            # Fix Firebase pod versions
-            installer.pod_targets.each do |pod|
-              if pod.name.eql?('FirebaseSharedSwift')
-                pod.version = '10.24.0'
-              end
-              if pod.name.eql?('FirebaseCoreInternal')
-                pod.version = '10.24.0'
-              end
-            end
-          end
-EOF
-          else
-            echo "No post_install hook found, creating new one..."
-            cat >> Podfile << 'EOF'
-          
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
-    end
-  end
-  
-  installer.pod_targets.each do |pod|
-    if pod.name.eql?('FirebaseSharedSwift')
-      pod.version = '10.24.0'
-    end
-    if pod.name.eql?('FirebaseCoreInternal')
-      pod.version = '10.24.0'
-    end
-  end
-end
-EOF
+          # Add post_install hook if it doesn't exist
+          if ! grep -q "post_install do" Podfile; then
+            echo "" >> Podfile
+            echo "post_install do |installer|" >> Podfile
+            echo "  installer.pods_project.targets.each do |target|" >> Podfile
+            echo "    target.build_configurations.each do |config|" >> Podfile
+            echo "      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'" >> Podfile
+            echo "    end" >> Podfile
+            echo "  end" >> Podfile
+            echo "end" >> Podfile
           fi
+      
       # Update CocoaPods repo & install pods
       - run: pod repo update
         working-directory: mobileapp/ios
+      
       - run: pod install
         working-directory: mobileapp/ios
+      
       # Build iOS app (no signing)
       - run: flutter build ios --release --no-codesign
         working-directory: mobileapp
+      
       # Create Payload folder
       - run: mkdir Payload
         working-directory: mobileapp/build/ios/iphoneos
+      
       # Move Runner.app into Payload/
       - run: mv Runner.app Payload/
         working-directory: mobileapp/build/ios/iphoneos
+      
       # Zip the Payload into an IPA
       - name: Zip output
         run: |
           cd mobileapp/build/ios/iphoneos
           zip -r FlutterIpaExport.ipa Payload
+      
       # Upload IPA to GitHub release
       - name: Upload IPA to GitHub Release
         uses: svenstaro/upload-release-action@v2
