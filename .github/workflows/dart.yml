@@ -20,8 +20,19 @@ jobs:
       - run: flutter pub get
         working-directory: mobileapp
       
+      # Check Firebase versions and potentially downgrade if needed
+      - name: Check Firebase versions
+        run: |
+          cd mobileapp
+          echo "Current Firebase dependencies:"
+          grep -A 5 -B 5 firebase pubspec.yaml || echo "No Firebase dependencies found"
+      
       # Remove old pods and Podfile.lock
       - run: rm -rf Pods Podfile.lock
+        working-directory: mobileapp/ios
+      
+      # Clean CocoaPods cache
+      - run: pod cache clean --all
         working-directory: mobileapp/ios
       
       # Ensure Podfile exists
@@ -52,9 +63,18 @@ jobs:
             echo "  installer.pods_project.targets.each do |target|" >> Podfile
             echo "    target.build_configurations.each do |config|" >> Podfile
             echo "      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'" >> Podfile
+            echo "      config.build_settings['SWIFT_VERSION'] = '5.0'" >> Podfile
             echo "    end" >> Podfile
             echo "  end" >> Podfile
             echo "end" >> Podfile
+          else
+            # If post_install exists, add Swift version setting
+            sed -i '' "/post_install do |installer|/a\\
+            installer.pods_project.targets.each do |target|\\
+              target.build_configurations.each do |config|\\
+                config.build_settings['SWIFT_VERSION'] = '5.0'\\
+              end\\
+            end" Podfile
           fi
       
       # Update CocoaPods repo & install pods
