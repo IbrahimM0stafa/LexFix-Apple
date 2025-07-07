@@ -1,30 +1,31 @@
 name: iOS-ipa-build
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:            # manual trigger from the Actions tab
 
 jobs:
   build-ios:
     name: "🎉  iOS Build"
-    runs-on: macos-latest
+    runs-on: macos-latest       # Xcode 15, Swift 5.9, CocoaPods pre-installed
 
     steps:
-    # 1 Checkout
+    # 1. Check out your code
     - uses: actions/checkout@v3
 
-    # 2 Set up Flutter
+    # 2. Install Flutter (stable channel)
     - uses: subosito/flutter-action@v2
       with:
         channel: stable
         architecture: x64
 
-    # 3 Flutter prep
-    - run: flutter clean
-      working-directory: mobileapp
-    - run: flutter pub get
+    # 3. Clean & resolve Dart/Flutter deps
+    - name: Flutter clean / pub get
+      run: |
+        flutter clean
+        flutter pub get
       working-directory: mobileapp
 
-    # 4 Reset CocoaPods skeleton
+    # 4. Re-create a fresh iOS/Pods skeleton + set min iOS 13
     - name: Prepare iOS folder
       run: |
         cd ios
@@ -32,43 +33,40 @@ jobs:
         if [ ! -f Podfile ]; then
           pod init
         fi
-        # Ensure minimum iOS 13.0
+        # Ensure platform :ios, '13.0'
         sed -i '' "s/^platform :ios.*/platform :ios, '13.0'/" Podfile || \
         sed -i '' '1s;^;platform :ios, '"'"'13.0'"'"'\n;' Podfile
       working-directory: mobileapp
 
-    # 5 Make sure every target builds with Swift 5.9
-    - name: Force Swift 5.9 in Podfile
+    # 5. Force Swift 5.9 (Firebase SDK 11.x requires it)
+    - name: Patch Podfile for Swift 5.9
       run: |
         cd mobileapp/ios
-
-        # Remove any previous post_install hook (if it’s still there)
+        # Remove any existing post_install block
         sed -i '' '/post_install do/,/^end$/d' Podfile
-
-        # Add a fresh one that sets Swift 5.9
+        # Add a new block
         cat >> Podfile <<'RUBY'
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-      config.build_settings['SWIFT_VERSION'] = '5.9'
+      config.build_settings['SWIFT_VERSION']              = '5.9'
     end
   end
 end
 RUBY
-
-        echo "=== Podfile after patch ==="
+        echo "=== Podfile ==="
         cat Podfile
 
-    # 6 Install pods
+    # 6. Install pods
     - run: pod install --repo-update
       working-directory: mobileapp/ios
 
-    # 7 Build (unsigned)
+    # 7. Build (unsigned) release
     - run: flutter build ios --release --no-codesign
       working-directory: mobileapp
 
-    # 8 Package IPA
+    # 8. Package the .ipa
     - name: Package IPA
       run: |
         cd build/ios/iphoneos
@@ -77,7 +75,7 @@ RUBY
         zip -r FlutterIpaExport.ipa Payload
       working-directory: mobileapp
 
-    # 9 Upload artifact
+    # 9. Attach IPA to a release tagged for this run
     - name: Upload IPA to GitHub Release
       uses: svenstaro/upload-release-action@v2
       with:
