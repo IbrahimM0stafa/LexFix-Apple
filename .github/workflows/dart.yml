@@ -1,31 +1,69 @@
-name: iOS-ipa-build
+name: CI
 
+###############################################################################
+# Triggers                                                                    #
+###############################################################################
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]            # add more branch names if needed
+    paths:
+      - '**/*.dart'
+      - pubspec.yaml
+  pull_request:
+    paths:
+      - '**/*.dart'
+      - pubspec.yaml
+  workflow_dispatch:              # manual button for the iOS IPA build
 
+###############################################################################
+# Job 1 — lint & tests (runs on push / PR only)                               #
+###############################################################################
 jobs:
-  build-ios:
-    name: "🎉  iOS Build"
-    runs-on: macos-latest
+  analyze_and_test:
+    if: github.event_name != 'workflow_dispatch'   # skip when you click the button
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/cirruslabs/flutter:stable     # Flutter SDK pre-installed
 
     steps:
-      # 1 Check out code
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Static analysis
+        run: flutter analyze --no-fatal-on-hints
+
+      - name: Run tests
+        run: flutter test
+
+###############################################################################
+# Job 2 — iOS unsigned IPA (runs only from the manual dispatch button)        #
+###############################################################################
+  build_ios:
+    if: github.event_name == 'workflow_dispatch'   # run ONLY from the button
+    runs-on: macos-latest
+    needs: []                                      # independent of the first job
+
+    steps:
+      # 1 Check out code
       - uses: actions/checkout@v3
 
-      # 2 Install Flutter stable
+      # 2 Install Flutter (stable)
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           architecture: x64
 
-      # 3 Clean + pub get
+      # 3 Clean & resolve packages
       - name: Flutter clean / pub get
         run: |
           flutter clean
           flutter pub get
         working-directory: mobileapp
 
-      # 4 Reset Pods + make sure platform :ios, '13.0'
+      # 4 Reset Pods, enforce iOS 13
       - name: Prepare iOS folder
         run: |
           cd ios
@@ -38,12 +76,12 @@ jobs:
           fi
         working-directory: mobileapp
 
-      # 5 Make Podfile use static frameworks + Swift 5.9
+      # 5 Patch Podfile → static frameworks, modular headers, Swift 5.9
       - name: Patch Podfile
         run: |
           cd mobileapp/ios
 
-          # ----------  force static frameworks  ----------
+          # force static linkage
           if grep -q "use_frameworks!" Podfile; then
             sed -i '' "s/use_frameworks!.*/use_frameworks! :linkage => :static/" Podfile
           else
@@ -51,20 +89,20 @@ jobs:
   use_frameworks! :linkage => :static" Podfile
           fi
 
-          # ----------  add modular headers if missing  ----------
+          # add modular headers if missing
           grep -q "use_modular_headers!" Podfile || \
             sed -i '' "/use_frameworks! :linkage => :static/a\\
   use_modular_headers!" Podfile
 
-          # ----------  replace any existing post_install  ----------
+          # replace any existing post_install
           sed -i '' '/post_install do/,/^end$/d' Podfile
           {
             echo
             echo "post_install do |installer|"
             echo "  installer.pods_project.targets.each do |t|"
             echo "    t.build_configurations.each do |c|"
-            echo "      c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'"
-            echo "      c.build_settings['SWIFT_VERSION']              = '5.9'"
+            echo "      c.build_settings[\"IPHONEOS_DEPLOYMENT_TARGET\"] = \"13.0\""
+            echo "      c.build_settings[\"SWIFT_VERSION\"]              = \"5.9\""
             echo "    end"
             echo "  end"
             echo "end"
@@ -73,15 +111,15 @@ jobs:
           echo "=== Final Podfile ==="
           cat Podfile
 
-      # 6 Install pods
+      # 6 Install pods
       - run: pod install --repo-update
         working-directory: mobileapp/ios
 
-      # 7 Build unsigned release
+      # 7 Build unsigned release
       - run: flutter build ios --release --no-codesign
         working-directory: mobileapp
 
-      # 8 Package Runner.app → IPA
+      # 8 Package Runner.app ⇒ IPA
       - name: Package IPA
         run: |
           cd build/ios/iphoneos
@@ -90,7 +128,7 @@ jobs:
           zip -r FlutterIpaExport.ipa Payload
         working-directory: mobileapp
 
-      # 9 Attach IPA to a GitHub Release
+      # 9 Upload IPA to a GitHub Release
       - name: Upload IPA to GitHub Release
         uses: svenstaro/upload-release-action@v2
         with:
