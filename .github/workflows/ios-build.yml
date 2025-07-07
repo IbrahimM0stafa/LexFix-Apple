@@ -1,11 +1,11 @@
 name: iOS-IPA-Build
 
 on:
-  workflow_dispatch:            # manual trigger
+  workflow_dispatch:            # manual trigger only
 
 jobs:
   build-ios:
-    runs-on: macos-latest       # Xcode 15, Swift 5.9
+    runs-on: macos-latest       # macOS 14, Xcode 15, Swift 5.9
 
     steps:
       # 1 – Checkout repo
@@ -17,14 +17,14 @@ jobs:
           channel: stable
           architecture: x64
 
-      # 3 – Clean & pub get
+      # 3 – Clean & fetch pub packages
       - name: Flutter clean / pub get
         run: |
           flutter clean
           flutter pub get
         working-directory: mobileapp
 
-      # 4 – Fresh Pods, ensure platform :ios '13.0'
+      # 4 – Reset Pods, ensure platform iOS 13
       - name: Prepare iOS folder
         run: |
           cd ios
@@ -37,23 +37,21 @@ jobs:
           fi
         working-directory: mobileapp
 
-      # 5 – Static frameworks, modular headers, Swift 5.9
+      # 5 – Add static-frameworks + modular headers + Swift 5.9
       - name: Patch Podfile
         run: |
           cd mobileapp/ios
 
-          # ----- static linkage -----
-          if grep -q 'use_frameworks!' Podfile; then
-            sed -i '' "s/use_frameworks!.*/use_frameworks! :linkage => :static/" Podfile
-          else
-            sed -i '' "/target 'Runner' do/a\ use_frameworks! :linkage => :static" Podfile
+          # ----- make sure we have use_frameworks! :static & use_modular_headers! -----
+          if ! grep -q 'use_frameworks! :linkage => :static' Podfile; then
+            printf "\nuse_frameworks! :linkage => :static\n" >> Podfile
           fi
 
-          # ----- modular headers -----
-          grep -q 'use_modular_headers!' Podfile || \
-            sed -i '' "/use_frameworks! :linkage => :static/a\ use_modular_headers!" Podfile
+          if ! grep -q 'use_modular_headers!' Podfile; then
+            printf "use_modular_headers!\n" >> Podfile
+          fi
 
-          # ----- fresh post_install -----
+          # ----- wipe any old post_install and add a fresh one -----
           sed -i '' '/post_install do/,/^end$/d' Podfile
           cat >> Podfile <<'RUBY'
 post_install do |installer|
@@ -83,7 +81,7 @@ RUBY
           zip -r FlutterIpaExport.ipa Payload
         working-directory: mobileapp
 
-      # 9 – Upload IPA to a release
+      # 9 – Upload IPA to a GitHub Release
       - name: Upload IPA
         uses: svenstaro/upload-release-action@v2
         with:
