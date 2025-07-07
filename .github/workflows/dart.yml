@@ -20,20 +20,20 @@ jobs:
       - run: flutter pub get
         working-directory: mobileapp
       
-      # Check Firebase versions and potentially downgrade if needed
+      # Check Firebase versions and fix compatibility issues
       - name: Fix Firebase and Google Sign-In compatibility
         run: |
           cd mobileapp
           echo "Current Firebase dependencies:"
           grep firebase pubspec.yaml
           
-          # Use much older Firebase versions that use older Firebase SDK
-          echo "Updating to much older compatible Firebase and Google Sign-In versions..."
-          sed -i '' 's/firebase_core: \^3.14.0/firebase_core: ^2.10.0/' pubspec.yaml
-          sed -i '' 's/firebase_messaging: \^15.2.7/firebase_messaging: ^14.4.0/' pubspec.yaml
-          sed -i '' 's/cloud_firestore: \^5.6.9/cloud_firestore: ^4.5.0/' pubspec.yaml
-          sed -i '' 's/firebase_auth: \^5.6.0/firebase_auth: ^4.4.0/' pubspec.yaml
-          sed -i '' 's/google_sign_in: \^6.1.6/google_sign_in: ^6.0.2/' pubspec.yaml
+          # Use compatible Firebase and Google Sign-In versions
+          echo "Updating to compatible Firebase and Google Sign-In versions..."
+          sed -i '' 's/firebase_core: \^3.14.0/firebase_core: ^2.24.2/' pubspec.yaml
+          sed -i '' 's/firebase_messaging: \^15.2.7/firebase_messaging: ^14.7.9/' pubspec.yaml
+          sed -i '' 's/cloud_firestore: \^5.6.9/cloud_firestore: ^4.13.6/' pubspec.yaml
+          sed -i '' 's/firebase_auth: \^5.6.0/firebase_auth: ^4.15.3/' pubspec.yaml
+          sed -i '' 's/google_sign_in: \^6.1.6/google_sign_in: ^6.1.5/' pubspec.yaml
           
           echo "Updated dependencies:"
           grep -E "(firebase|google_sign_in)" pubspec.yaml
@@ -66,10 +66,10 @@ jobs:
           
           # Explicitly set iOS platform version at the top of Podfile
           if grep -q "platform :ios" Podfile; then
-            sed -i '' "s/platform :ios.*/platform :ios, '11.0'/" Podfile
+            sed -i '' "s/platform :ios.*/platform :ios, '13.0'/" Podfile
           else
             sed -i '' '1i\
-          platform :ios, '"'"'11.0'"'"'\
+          platform :ios, '"'"'13.0'"'"'\
           ' Podfile
           fi
           
@@ -79,14 +79,17 @@ jobs:
             sed -i '' '/post_install do/,/^end$/d' Podfile
           fi
           
-          # Add our post_install block
+          # Add our post_install block with updated deployment target
           cat >> Podfile << 'EOF'
           
           post_install do |installer|
             installer.pods_project.targets.each do |target|
               target.build_configurations.each do |config|
-                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
                 config.build_settings['SWIFT_VERSION'] = '5.0'
+                # Fix for GoogleUtilities compatibility
+                config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+                config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'PERMISSION_EVENTS=1'
               end
             end
           end
