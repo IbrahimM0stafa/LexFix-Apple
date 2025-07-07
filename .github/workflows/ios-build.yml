@@ -1,4 +1,3 @@
-# .github/workflows/ios-build.yml
 name: iOS-IPA-Build
 
 on:
@@ -6,54 +5,54 @@ on:
 
 jobs:
   build-ios:
-    runs-on: macos-latest       # Xcode 15, Swift 5.9
+    runs-on: macos-latest       # Xcode 15 / Swift 5.9
 
     steps:
-      # 1 ─ Checkout repository
+      # 1 ─ Checkout repo
       - uses: actions/checkout@v3
 
-      # 2 ─ Install Flutter (stable channel)
+      # 2 ─ Install Flutter (stable)
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           architecture: x64
 
-      # 3 ─ Clean project & fetch packages
+      # 3 ─ Clean & pub get
       - name: Flutter clean / pub get
         run: |
           flutter clean
           flutter pub get
         working-directory: mobileapp
 
-      # 4 ─ Reset CocoaPods and ensure platform :ios, '13.0'
+      # 4 ─ Fresh Pods, ensure platform :ios '13.0'
       - name: Prepare iOS folder
         run: |
           cd ios
           rm -rf Pods Podfile.lock
           [ -f Podfile ] || pod init
-          if grep -q '^platform :ios' Podfile ; then
+          if grep -q '^platform :ios' Podfile; then
             sed -i '' "s/^platform :ios.*/platform :ios, '13.0'/" Podfile
           else
             sed -i '' "1s/^/platform :ios, '13.0'\n/" Podfile
           fi
         working-directory: mobileapp
 
-      # 5 ─ Force static frameworks, modular headers, Swift 5.9
+      # 5 ─ Static frameworks, modular headers, Swift 5.9
       - name: Patch Podfile
         run: |
           cd mobileapp/ios
-          # static linkage
-          if grep -q 'use_frameworks!' Podfile ; then
+          # --- static linkage ---
+          if grep -q 'use_frameworks!' Podfile; then
             sed -i '' "s/use_frameworks!.*/use_frameworks! :linkage => :static/" Podfile
           else
             sed -i '' "/target 'Runner' do/a\\
-  use_frameworks! :linkage => :static" Podfile
+              use_frameworks! :linkage => :static" Podfile
           fi
-          # modular headers
+          # --- modular headers ---
           grep -q 'use_modular_headers!' Podfile || \
             sed -i '' "/use_frameworks! :linkage => :static/a\\
-  use_modular_headers!" Podfile
-          # fresh post_install
+              use_modular_headers!" Podfile
+          # --- fresh post_install ---
           sed -i '' '/post_install do/,/^end$/d' Podfile
           cat >> Podfile <<'RUBY'
 
@@ -84,7 +83,7 @@ RUBY
           zip -r FlutterIpaExport.ipa Payload
         working-directory: mobileapp
 
-      # 9 ─ Upload IPA to a GitHub Release
+      # 9 ─ Upload IPA to a release
       - name: Upload IPA
         uses: svenstaro/upload-release-action@v2
         with:
