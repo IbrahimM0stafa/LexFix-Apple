@@ -6,7 +6,6 @@ on:
 jobs:
   build-ios:
     runs-on: macos-latest       # macOS 14, Xcode 15, Swift 5.9
-
     steps:
       # 1 – Checkout repo
       - uses: actions/checkout@v3
@@ -41,28 +40,25 @@ jobs:
       - name: Patch Podfile
         run: |
           cd mobileapp/ios
-
           # ----- make sure we have use_frameworks! :static & use_modular_headers! -----
           if ! grep -q 'use_frameworks! :linkage => :static' Podfile; then
             printf "\nuse_frameworks! :linkage => :static\n" >> Podfile
           fi
-
           if ! grep -q 'use_modular_headers!' Podfile; then
             printf "use_modular_headers!\n" >> Podfile
           fi
-
           # ----- wipe any old post_install and add a fresh one -----
           sed -i '' '/post_install do/,/^end$/d' Podfile
           cat >> Podfile <<'RUBY'
-post_install do |installer|
-  installer.pods_project.targets.each do |t|
-    t.build_configurations.each do |c|
-      c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-      c.build_settings['SWIFT_VERSION']              = '5.9'
-    end
-  end
-end
-RUBY
+          post_install do |installer|
+            installer.pods_project.targets.each do |t|
+              t.build_configurations.each do |c|
+                c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+                c.build_settings['SWIFT_VERSION']              = '5.9'
+              end
+            end
+          end
+          RUBY
 
       # 6 – Install pods
       - run: pod install --repo-update
