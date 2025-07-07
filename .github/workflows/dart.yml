@@ -16,12 +16,12 @@ jobs:
           channel: stable
           architecture: x64
 
-      # Run flutter pub get inside mobileapp
-      - run: flutter pub get
-        working-directory: mobileapp
-
       # Clean iOS build artifacts
       - run: flutter clean
+        working-directory: mobileapp
+
+      # Run flutter pub get inside mobileapp
+      - run: flutter pub get
         working-directory: mobileapp
 
       # Remove old pods and Podfile.lock
