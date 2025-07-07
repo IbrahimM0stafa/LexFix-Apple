@@ -27,13 +27,13 @@ jobs:
           echo "Current Firebase dependencies:"
           grep firebase pubspec.yaml
           
-          # Use compatible versions that work together
+          # Use compatible versions that work together - need newer Firebase for GoogleSignIn 8.0
           echo "Updating to compatible Firebase and Google Sign-In versions..."
-          sed -i '' 's/firebase_core: \^3.14.0/firebase_core: ^2.24.2/' pubspec.yaml
-          sed -i '' 's/firebase_messaging: \^15.2.7/firebase_messaging: ^14.7.10/' pubspec.yaml
-          sed -i '' 's/cloud_firestore: \^5.6.9/cloud_firestore: ^4.13.6/' pubspec.yaml
-          sed -i '' 's/firebase_auth: \^5.6.0/firebase_auth: ^4.15.3/' pubspec.yaml
-          sed -i '' 's/google_sign_in: \^6.1.6/google_sign_in: ^6.1.5/' pubspec.yaml
+          sed -i '' 's/firebase_core: \^3.14.0/firebase_core: ^2.27.0/' pubspec.yaml
+          sed -i '' 's/firebase_messaging: \^15.2.7/firebase_messaging: ^14.9.4/' pubspec.yaml
+          sed -i '' 's/cloud_firestore: \^5.6.9/cloud_firestore: ^4.15.8/' pubspec.yaml
+          sed -i '' 's/firebase_auth: \^5.6.0/firebase_auth: ^4.17.8/' pubspec.yaml
+          sed -i '' 's/google_sign_in: \^6.1.6/google_sign_in: ^6.2.0/' pubspec.yaml
           
           echo "Updated dependencies:"
           grep -E "(firebase|google_sign_in)" pubspec.yaml
@@ -76,7 +76,7 @@ jobs:
             # Create a temporary file with the pod constraints
             cat > pod_constraints.txt << 'EOF'
           # Explicit pod version constraints for compatibility
-          pod 'GoogleUtilities', '~> 7.12'
+          pod 'GoogleUtilities', '~> 8.0'
           pod 'GoogleSignIn', '~> 8.0'
           
           EOF
