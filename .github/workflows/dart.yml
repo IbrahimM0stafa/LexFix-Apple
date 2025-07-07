@@ -1,29 +1,20 @@
-# .github/workflows/dart.yml
 name: dart_ci
 
 on:
   push:
-    branches:            # edit if you use other branch names
-      - main
-    paths:
-      - '**/*.dart'
-      - pubspec.yaml
+    branches: [ main ]          # change if you use other branches
+    paths: [ '**/*.dart', pubspec.yaml ]
   pull_request:
-    paths:
-      - '**/*.dart'
-      - pubspec.yaml
+    paths: [ '**/*.dart', pubspec.yaml ]
 
 jobs:
   analyze_and_test:
     runs-on: ubuntu-latest
-
-    # CirrusLabs image already has Flutter stable installed
     container:
-      image: ghcr.io/cirruslabs/flutter:stable
+      image: ghcr.io/cirruslabs/flutter:stable   # Flutter stable SDK
 
     steps:
-      - name: Checkout source
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       - name: Install dependencies
         run: flutter pub get
