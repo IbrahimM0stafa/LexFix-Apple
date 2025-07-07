@@ -69,8 +69,8 @@ jobs:
             sed -i '' "s/platform :ios.*/platform :ios, '11.0'/" Podfile
           else
             sed -i '' '1i\
-platform :ios, '"'"'11.0'"'"'\
-' Podfile
+          platform :ios, '"'"'11.0'"'"'\
+          ' Podfile
           fi
           
           # Remove existing post_install if it exists and add our own
