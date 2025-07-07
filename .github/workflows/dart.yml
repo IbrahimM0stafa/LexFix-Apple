@@ -2,7 +2,7 @@ name: dart_ci
 
 on:
   push:
-    branches: [ main ]          # change if you use other branches
+    branches: [ main ]            # add other branch names if you like
     paths: [ '**/*.dart', pubspec.yaml ]
   pull_request:
     paths: [ '**/*.dart', pubspec.yaml ]
