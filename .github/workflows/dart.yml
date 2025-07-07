@@ -12,62 +12,75 @@ jobs:
           channel: stable
           architecture: x64
       
-      - name: Set up environment
+      # Clean workspace
+      - run: flutter clean
+        working-directory: mobileapp
+      
+      # Get dependencies (creates pubspec.lock)
+      - run: flutter pub get
+        working-directory: mobileapp
+      
+      # Fix compatibility issues
+      - name: Resolve Firebase conflicts
         run: |
           cd mobileapp
-          flutter clean
-          flutter pub get
-      
-      - name: Configure Podfile
-        run: |
-          cd mobileapp/ios
-          # Ensure Podfile exists
-          if [ ! -f Podfile ]; then
-            pod init
-          fi
           
-          # Backup original Podfile
-          cp Podfile Podfile.backup
+          # Update to compatible versions
+          flutter pub add \
+            firebase_core:^2.32.0 \
+            firebase_messaging:^14.7.10 \
+            cloud_firestore:^4.15.2 \
+            firebase_auth:^4.11.1 \
+            google_sign_in:^6.1.14
           
-          # Add platform and Firebase version constraints
-          cat > Podfile << 'EOF'
+          # Force GoogleUtilities resolution
+          echo "Adding Podfile resolution rules..."
+          cat << EOF > ios/Podfile
           platform :ios, '13.0'
-          $FirebaseSDKVersion = '10.20.0'
-          
-          # Original Podfile content
-          $(tail -n +2 Podfile.backup)
-          
+          # ... existing Podfile content ...
           post_install do |installer|
             installer.pods_project.targets.each do |target|
               target.build_configurations.each do |config|
                 config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-                config.build_settings['SWIFT_VERSION'] = '5.0'
-                config.build_settings['ENABLE_BITCODE'] = 'NO'
+                # Resolve GoogleUtilities conflict
+                if target.name == 'GoogleUtilities'
+                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
+                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'DISABLE_FIREBASE_APPCHECK=1'
+                end
               end
             end
           end
           EOF
+        working-directory: mobileapp
       
-      - name: Install pods
-        run: |
-          cd mobileapp/ios
-          pod repo update
+      # Rebuild dependencies
+      - run: flutter pub get
+        working-directory: mobileapp
+      
+      # Pod setup
+      - run: |
+          cd ios
           pod install --repo-update
+        working-directory: mobileapp
       
-      - name: Build IPA
+      # Build IPA
+      - run: flutter build ios --release --no-codesign
+        working-directory: mobileapp
+      
+      # Package IPA
+      - name: Package IPA
         run: |
-          cd mobileapp
-          flutter build ios --release --no-codesign
-          cd build/ios/iphoneos
+          cd mobileapp/build/ios/iphoneos
           mkdir Payload
           mv Runner.app Payload/
           zip -r FlutterIpaExport.ipa Payload
       
+      # Upload artifact
       - name: Upload IPA
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: mobileapp/build/ios/iphoneos/FlutterIpaExport.ipa
-          asset_name: AppName-${{ github.run_number }}.ipa
+          asset_name: App-${{ github.run_number }}.ipa
           tag: ios-build-${{ github.run_number }}
           overwrite: true
