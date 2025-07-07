@@ -6,63 +6,85 @@ on:
 jobs:
   build-ios:
     name: "🎉  iOS Build"
-    runs-on: macos-latest   # Xcode 15 with SDK 11.x support
+    runs-on: macos-latest
 
     steps:
-      # 1 Checkout
-      - uses: actions/checkout@v3
+    # 1 Checkout
+    - uses: actions/checkout@v3
 
-      # 2 Set up Flutter
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          architecture: x64
+    # 2 Set up Flutter
+    - uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+        architecture: x64
 
-      # 3 Prep Flutter project
-      - run: flutter clean
-        working-directory: mobileapp
+    # 3 Flutter prep
+    - run: flutter clean
+      working-directory: mobileapp
+    - run: flutter pub get
+      working-directory: mobileapp
 
-      - run: flutter pub get
-        working-directory: mobileapp
+    # 4 Reset CocoaPods skeleton
+    - name: Prepare iOS folder
+      run: |
+        cd ios
+        rm -rf Pods Podfile.lock
+        if [ ! -f Podfile ]; then
+          pod init
+        fi
+        # Ensure minimum iOS 13.0
+        sed -i '' "s/^platform :ios.*/platform :ios, '13.0'/" Podfile || \
+        sed -i '' '1s;^;platform :ios, '"'"'13.0'"'"'\n;' Podfile
+      working-directory: mobileapp
 
-      # 4 Reset CocoaPods & make sure Podfile has the right platform
-      - name: Prepare iOS folder
-        run: |
-          cd ios
-          rm -rf Pods Podfile.lock
-          if [ ! -f Podfile ]; then
-            pod init
-          fi
-          # Ensure minimum iOS 13.0 (matches Firebase SDK 11)
-          sed -i '' "s/^platform :ios.*/platform :ios, '13.0'/" Podfile || \
-          sed -i '' '1s;^;platform :ios, '"'"'13.0'"'"'\n;' Podfile
-        working-directory: mobileapp
+    # 5 Make sure every target builds with Swift 5.9
+    - name: Force Swift 5.9 in Podfile
+      run: |
+        cd mobileapp/ios
 
-      # 5 Install pods (fresh repo update)
-      - run: pod install --repo-update
-        working-directory: mobileapp/ios
+        # Remove any previous post_install hook (if it’s still there)
+        sed -i '' '/post_install do/,/^end$/d' Podfile
 
-      # 6 Build the app without codesign
-      - run: flutter build ios --release --no-codesign
-        working-directory: mobileapp
+        # Add a fresh one that sets Swift 5.9
+        cat >> Podfile <<'RUBY'
+post_install do |installer|
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      config.build_settings['SWIFT_VERSION'] = '5.9'
+    end
+  end
+end
+RUBY
 
-      # 7 Package IPA
-      - name: Package IPA
-        run: |
-          cd build/ios/iphoneos
-          mkdir -p Payload
-          mv Runner.app Payload/
-          zip -r FlutterIpaExport.ipa Payload
-        working-directory: mobileapp
+        echo "=== Podfile after patch ==="
+        cat Podfile
 
-      # 8 Upload to the build’s GitHub Release
-      - name: Upload IPA to GitHub Release
-        uses: svenstaro/upload-release-action@v2
-        with:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: mobileapp/build/ios/iphoneos/FlutterIpaExport.ipa
-          asset_name: FlutterIpaExport.ipa
-          tag: ios-build-${{ github.run_number }}
-          overwrite: true
-          body: |
-            🎉 iOS IPA build artifact for run #${{ github.run_number }}
+    # 6 Install pods
+    - run: pod install --repo-update
+      working-directory: mobileapp/ios
+
+    # 7 Build (unsigned)
+    - run: flutter build ios --release --no-codesign
+      working-directory: mobileapp
+
+    # 8 Package IPA
+    - name: Package IPA
+      run: |
+        cd build/ios/iphoneos
+        mkdir -p Payload
+        mv Runner.app Payload/
+        zip -r FlutterIpaExport.ipa Payload
+      working-directory: mobileapp
+
+    # 9 Upload artifact
+    - name: Upload IPA to GitHub Release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: mobileapp/build/ios/iphoneos/FlutterIpaExport.ipa
+        asset_name: FlutterIpaExport.ipa
+        tag: ios-build-${{ github.run_number }}
+        overwrite: true
+        body: |
+          🎉 iOS IPA build artifact for run #${{ github.run_number }}
