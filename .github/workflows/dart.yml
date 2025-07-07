@@ -1,11 +1,12 @@
+# .github/workflows/dart.yml
 name: CI
 
-###############################################################################
-# Triggers                                                                    #
-###############################################################################
+################################################################################
+# Triggers                                                                     #
+################################################################################
 on:
   push:
-    branches: [ main ]            # add more branch names if needed
+    branches: [ main ]              # add other branch names if you use them
     paths:
       - '**/*.dart'
       - pubspec.yaml
@@ -13,17 +14,17 @@ on:
     paths:
       - '**/*.dart'
       - pubspec.yaml
-  workflow_dispatch:              # manual button for the iOS IPA build
+  workflow_dispatch:                # provides the “Run workflow” button
 
-###############################################################################
-# Job 1 — lint & tests (runs on push / PR only)                               #
-###############################################################################
+################################################################################
+# Job 1 – lint & tests (only on push / PR)                                     #
+################################################################################
 jobs:
   analyze_and_test:
-    if: github.event_name != 'workflow_dispatch'   # skip when you click the button
+    if: github.event_name != 'workflow_dispatch'
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/cirruslabs/flutter:stable     # Flutter SDK pre-installed
+      image: ghcr.io/cirruslabs/flutter:stable   # Flutter stable SDK pre-installed
 
     steps:
       - name: Checkout source
@@ -38,32 +39,31 @@ jobs:
       - name: Run tests
         run: flutter test
 
-###############################################################################
-# Job 2 — iOS unsigned IPA (runs only from the manual dispatch button)        #
-###############################################################################
+################################################################################
+# Job 2 – iOS unsigned IPA (only when you press the button)                    #
+################################################################################
   build_ios:
-    if: github.event_name == 'workflow_dispatch'   # run ONLY from the button
+    if: github.event_name == 'workflow_dispatch'
     runs-on: macos-latest
-    needs: []                                      # independent of the first job
 
     steps:
-      # 1 Check out code
+      # 1 ─ Checkout
       - uses: actions/checkout@v3
 
-      # 2 Install Flutter (stable)
+      # 2 ─ Flutter toolchain
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
           architecture: x64
 
-      # 3 Clean & resolve packages
+      # 3 ─ Clean & get packages
       - name: Flutter clean / pub get
         run: |
           flutter clean
           flutter pub get
         working-directory: mobileapp
 
-      # 4 Reset Pods, enforce iOS 13
+      # 4 ─ Reset Pods and enforce iOS 13
       - name: Prepare iOS folder
         run: |
           cd ios
@@ -76,11 +76,10 @@ jobs:
           fi
         working-directory: mobileapp
 
-      # 5 Patch Podfile → static frameworks, modular headers, Swift 5.9
+      # 5 ─ Patch Podfile for static frameworks, modular headers, Swift 5.9
       - name: Patch Podfile
         run: |
           cd mobileapp/ios
-
           # force static linkage
           if grep -q "use_frameworks!" Podfile; then
             sed -i '' "s/use_frameworks!.*/use_frameworks! :linkage => :static/" Podfile
@@ -88,38 +87,34 @@ jobs:
             sed -i '' "/target 'Runner' do/a\\
   use_frameworks! :linkage => :static" Podfile
           fi
-
           # add modular headers if missing
           grep -q "use_modular_headers!" Podfile || \
             sed -i '' "/use_frameworks! :linkage => :static/a\\
   use_modular_headers!" Podfile
-
           # replace any existing post_install
           sed -i '' '/post_install do/,/^end$/d' Podfile
-          {
-            echo
-            echo "post_install do |installer|"
-            echo "  installer.pods_project.targets.each do |t|"
-            echo "    t.build_configurations.each do |c|"
-            echo "      c.build_settings[\"IPHONEOS_DEPLOYMENT_TARGET\"] = \"13.0\""
-            echo "      c.build_settings[\"SWIFT_VERSION\"]              = \"5.9\""
-            echo "    end"
-            echo "  end"
-            echo "end"
-          } >> Podfile
-
+          cat >> Podfile <<'RUBY'
+post_install do |installer|
+  installer.pods_project.targets.each do |t|
+    t.build_configurations.each do |c|
+      c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
+      c.build_settings['SWIFT_VERSION']              = '5.9'
+    end
+  end
+end
+RUBY
           echo "=== Final Podfile ==="
           cat Podfile
 
-      # 6 Install pods
+      # 6 ─ Install pods
       - run: pod install --repo-update
         working-directory: mobileapp/ios
 
-      # 7 Build unsigned release
+      # 7 ─ Build unsigned IPA
       - run: flutter build ios --release --no-codesign
         working-directory: mobileapp
 
-      # 8 Package Runner.app ⇒ IPA
+      # 8 ─ Package Runner.app → IPA
       - name: Package IPA
         run: |
           cd build/ios/iphoneos
@@ -128,7 +123,7 @@ jobs:
           zip -r FlutterIpaExport.ipa Payload
         working-directory: mobileapp
 
-      # 9 Upload IPA to a GitHub Release
+      # 9 ─ Attach IPA to a GitHub Release
       - name: Upload IPA to GitHub Release
         uses: svenstaro/upload-release-action@v2
         with:
