@@ -77,7 +77,7 @@ jobs:
       - run: pod install --repo-update
         working-directory: mobileapp/ios
 
-      # 7 Build unsigned releasek
+      # 7 Build unsigned release
       - run: flutter build ios --release --no-codesign
         working-directory: mobileapp
 
