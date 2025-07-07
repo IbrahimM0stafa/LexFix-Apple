@@ -1,0 +1,760 @@
+{
+    "@@locale": "ar",
+    "title": "إِنْشَاءُ حِسَابٍٍ",
+    "signuptitlename": "الاسم",
+    "signupinputfieldname": "مثال:ابراهيم مصطفي",
+    "signuptitleusername": "اسم المستخدم",
+    "signupinputfieldusername": "مثال:ibrahimzekas123",
+    "signuptitleemail": "البريد الالكتروني",
+    "signupinputfieldemail": "مثال:ibrahimzekas@gmail.com",
+    "signuptitlephonenumber": "رقم الهاتف",
+    "signuptitlenationality": "الجنسية",
+    "signupinputfieldnationality": "مثال:مصري",
+    "signuptitlepassword": "كلمة المرور",
+    "signupinputfieldpassword": "مثال:MyP@ssw0rd123",
+    "signuptitleconfirmpassword": "تأكيد كلمة المرور",
+    "signup_password_mismatch": "ليس  متماشث",
+    "signuptitlebirthdate": "تاريخ الميلاد",
+    "signupinputfieldbirthdate": "مثال:15/7/2002",
+    "phonenumbersearch": "ابحث",
+    "genderSelect": "اختار النوع",
+    "genderSelected": ":اختار",
+    "genderMale": "ذكر",
+    "genderFemale": "انثي",
+    "continuesignuptitle": "تَسْجِيلُ بَيَانَاتِ الطِّفْلِ",
+    "createaccountbutton": "إنشاء الحساب",
+    "signupbutton": "استمرار",
+    "parentNavBarHome": "القائمة",
+    "parentNavBarChangeLanguage": "اختر اللغة",
+    "parentNavBarSettings": "الاعدادات",
+    "parentNavBarLogout": "تسجيل الخروج",
+    "usernameRequired": "يجب إدخال اسم المستخدم",
+    "usernameShort": "يجب أن يكون اسم المستخدم على الأقل 3 أحرف",
+    "usernameExist": "اسم المستخدم مأخوذ بالفعل",
+    "emailRequired": "يجب إدخال البريد الإلكتروني",
+    "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+    "emailExist": "هذا البريد الإلكتروني مسجّل بالفعل",
+    "passwordRequired": "يجب إدخال كلمة المرور",
+    "passwordShort": "يجب أن تتكون كلمة المرور من 8 أحرف على الأقل",
+    "confirmPasswordRequired": "يجب تأكيد كلمة المرور",
+    "passwordMismatch": "كلمتا المرور غير متطابقتين",
+    "adultSignupTitle": "إِنْشَاءُ حِسَابٍ كمتعلم",
+    "dashboard_title": "لوحة معلومات ",
+    "welcome_message": "مرحبًا بعودتك، ",
+    "explore_message": "لنستكشف بعض الأفكار اليوم",
+    "categories": "الفئات",
+    "tips": "نصائح",
+    "learner_members": "أعضاء المتعلمين",
+    "add_word": "إضافة كلمة",
+    "learner_progress": "تقدّم المتعلّمين",
+    "no_progress_data": "لا توجد بيانات متاحة",
+    "view_details": "عرض التفاصيل",
+    "addNewLearner": "إضافة متعلم جديد",
+    "cancel": "إلغاء",
+    "add": "إضافة",
+    "clickToAddLearners": "اضغط على زر + لإضافة المتعلمين.",
+    "showMore": "عرض المزيد",
+    "dashboardTitle": "لوحة تحكم {name}",
+    "exercise2Title": "التدريب التاني",
+    "fishGameTitle": "لعبة الأسماك بالحروف",
+    "roundLabel": "الجولة {current} من {total}",
+    "listenToLetter": "استمع إلى الحرف",
+    "howToPlayTitle": "كيفية اللعب",
+    "howToPlayDescription": "استمع إلى الحرف وابحث عن السمكة المطابقة. اضغط على السمكة الصحيحة. تحصل على نقطة لكل إجابة صحيحة!",
+    "okButton": "حسنًا",
+    "correctAnswer": "🎉 صحيح!",
+    "wrongAnswer": "❌ خطأ! الحرف الصحيح هو: {letter}",
+    "greatJob": "🎉 أحسنت! درجتك: {score} من {total}",
+    "tryAgain2": "😊 لا بأس! درجتك: {score} من {total}",
+    "listen": "استمع",
+    "traceThisLetter": "📝 تتبع هذا الحرف: {letter}",
+    "finishTracing": "✅ إنهاء التتبع",
+    "completedAllLetters": "🎉 لقد أنهيت جميع الحروف!",
+    "encouragementMessage": "👏 أحسنت! لقد تتبعت جميع الحروف العربية الـ28!",
+    "howToTrace": "📚 كيفية التتبع",
+    "instructions": "١. تتبع الحرف بإصبعك.\n٢. حاول البقاء على شكل الحرف.\n٣. اضغط تم عند الانتهاء.",
+    "gotIt": "فهمت!",
+    "done": "✅ تم",
+    "clear": "🧹 مسح",
+    "traceTitle": "✍️ تتبع الحرف",
+    "greatJob2": "🎉 عمل رائع!",
+    "restart": "ابدأ من جديد",
+    "tryAgain3": "❌ حاول مرة أخرى",
+    "retry": "إعادة المحاولة",
+    "wellDone": " !أحسنت ✅",
+    "youTracedCorrectly": "لقد قمت بتتبع الحرف بشكل صحيح.",
+    "next": "التالي",
+    "spellingGame": "لعبة التهجئة",
+    "help": "مساعدة",
+    "instructionsTitle": "كيفية اللعب",
+    "instruction1": "اسحب الحروف بالترتيب الصحيح.",
+    "instruction2": "إذا كانت الإجابة صحيحة، ستحصل على كلمة جديدة.",
+    "instruction3": "حاول إكمال جميع الكلمات للحصول على أعلى نتيجة!",
+    "wordsGame3Title": "لعبة الشهور",
+    "verify": "تحقق",
+    "drawLetter": "ارسم الحرف \"{letter}\"",
+    "drawInstruction": "المس وارسم في أي مكان على اللوحة",
+    "strokeCount": "عدد الخطوط: {count}",
+    "pointCount": "عدد النقاط: {count}",
+    "gameOverTitle": "🎮 انتهت اللعبة",
+    "greatJobMotivation": "🎉 عمل رائع! أنت مذهل!",
+    "tryAgainMotivation": "💪 استمر! يمكنك فعلها!",
+    "correctFeedback": "أحسنت! 🎉",
+    "wrongFeedback": "حاول مرة أخرى",
+    "roundLabel2": "الجولة",
+    "timeLabel": "الوقت",
+    "exit": "إنهاء",
+    "gameFinished": "انتهت اللعبة!",
+    "info": "معلومات عن التمرين",
+    "instructionTimer": "سيكون لكل سؤال مؤقت 5 ثوانٍ للإجابة.",
+    "instructionLookCarefully": "انظر إلى شكل الاتجاه بعناية واختر الجملة الصحيحة.",
+    "instructionAnswerShown": "بعد كل سؤال، سيتم عرض الإجابة الصحيحة.",
+    "ttsInstructions": "سيكون لكل سؤال مؤقت 5 ثوانٍ للإجابة. انظر إلى شكل الاتجاه بعناية واختر الجملة الصحيحة. بعد كل سؤال، سيتم عرض الإجابة الصحيحة.",
+    "startExercise": "ابدأ التمرين",
+    "directions": "الاتجاهات",
+    "tapArrowToHear": "اضغط على السهم لسماع الاتجاه",
+    "directionExerciseTitle": "تمرين الاتجاهات",
+    "seconds": "{count} ثانية",
+    "questionProgress": "السؤال {current} / {total}",
+    "whatIsDirection": "ما هو الاتجاه؟",
+    "listenAgain": "اسمع مرة أخرى ({remaining} محاولات متبقية)",
+    "correct": "صحيح! ✅",
+    "incorrect": "خطأ! ❌",
+    "correctAnswerIs": "الإجابة الصحيحة: {answer}",
+    "tryAgainEncouragement": "حاول مرة أخرى! 💪",
+    "excellent": "ممتاز! 🎉",
+    "bravo": "براڤو! 👏",
+    "amazing": "مذهل! 😎",
+    "gameName": "لعبة الاتجاهات",
+    "exerciseInfoTitle": "معلومات عن التمرين",
+    "timerInfo": "سيكون لكل سؤال مؤقت 8 ثوانٍ للإجابة.",
+    "dragInfo": "اسحب الصورة وضعها في الاتجاه الصحيح.",
+    "correctDirectionInfo": "بعد كل سؤال، سيتم عرض الاتجاه الصحيح.",
+    "directionsTitle": "الاتجاهات",
+    "tapToHearDirection": "اضغط على السهم لسماع الاتجاه",
+    "speakDirectionTemplate": "الاتجاه في {direction}",
+    "instructionSpeech": "سيكون لكل سؤال مؤقت 8 ثوانٍ للإجابة. اسحب الصورة وضعها في الاتجاه الصحيح. بعد كل سؤال، سيتم عرض الاتجاه الصحيح.",
+    "returnBack": "العودة",
+    "dontWorryTryAgain": "لا تقلق، حاول مرة أخرى",
+    "tryingHardGreat": "أنت تحاول بجد، هذا رائع",
+    "tryingIsFirstStep": "المحاولة هي الخطوة الأولى",
+    "everyTryMakesStronger": "كل محاولة تجعلك أقوى",
+    "dontGiveUpLearning": "لا تستسلم، التعلم يحتاج وقت",
+    "learningNeedsPatience": "التعلم يحتاج إلى صبر",
+    "keepTryingProgressing": "استمر في المحاولة، أنت تتقدم",
+    "veryGreat": "رائع جداً",
+    "excellentWork": "عمل ممتاز",
+    "verySmart": "أنت ذكي جداً",
+    "keepProgressing": "استمر في التقدم",
+    "up": "أعلى",
+    "down": "أسفل",
+    "right": "يمين",
+    "left": "يسار",
+    "upRight": "أعلى يمين",
+    "downRight": "أسفل يمين",
+    "upLeft": "أعلى يسار",
+    "downLeft": "أسفل يسار",
+    "cat": "قطة",
+    "apple": "تفاحة",
+    "car": "سيارة",
+    "book": "كتاب",
+    "ball": "كرة",
+    "dragImageToCorrectDirection": "اسحب الصورة إلى الاتجاه الصحيح",
+    "correctDirectionIs": "الاتجاه الصحيح هو {direction}",
+    "exerciseFinished": "انتهى التمرين",
+    "exerciseCompleted": "تم إنجاز التمرين",
+    "finalScore": "النتيجة النهائية: {score} من {total}",
+    "placeImageInDirection": "ضع {item} في اتجاه {direction}",
+    "exitExerciseQuestion": "هل تريد الخروج من التمرين؟",
+    "progressWillBeLost": "سيتم فقدان تقدمك",
+    "secondsRemaining": "{seconds} ثواني متبقية",
+    "dragImageToDirection": "اسحب {item} إلى اتجاه {direction}",
+    "helpful_tips": "نصائح مفيدة للتعلم",
+    "manage_learners": "إدارة المتعلمين",
+    "add_vocabulary": "إضافة مفردات جديدة",
+    "track_progress": "تتبع التقدم في التعلم",
+    "explore": "استكشاف",
+    "search_hint": "ابحث عن الأنشطة...",
+    "recent_activity": "النشاطات الأخيرة",
+    "great_progress": "تقدم رائع!",
+    "learners_completed_activities": "أكمل متعلموك {count} نشاطًا اليوم",
+    "today": "اليوم",
+    "tips_title": "نصائح",
+    "track_learning_progress": "تتبع تقدم التعلم",
+    "monitor_daily_activities": "راقب الأنشطة التعليمية اليومية",
+    "progress_summary": "ملخص التقدم",
+    "no_learning_activities": "لم يتم تسجيل أي نشاط تعليمي لهذا اليوم",
+    "stat_total": "الإجمالي",
+    "stat_correct": "صحيح",
+    "stat_incorrect": "خاطئ",
+    "exercise_breakdown": "تفصيل التمارين",
+    "label_letters": "الحروف",
+    "label_words": "الكلمات",
+    "label_sentences": "الجمل",
+    "label_games": "الألعاب",
+    "game_summary": "ملخص الألعاب",
+    "game_sessions": "جلسات الألعاب",
+    "total_attempts": "إجمالي المحاولات",
+    "quest_complete": "المهمة مكتملة",
+    "quest_pending": "المهمة قيد الانتظار",
+    "award_won": "تم الفوز بالجائزة",
+    "no_award": "لا توجد جائزة",
+    "learner_details": "تفاصيل المتعلم",
+    "no_learner_data_available": "لا توجد بيانات متاحة للمتعلم.",
+    "parentNavBarLearnerMembers": "أعضاء المتعلمين",
+    "parentNavBarLearnersProgress": "تقدم المتعلمين",
+    "parentNavBarChooseLanguage": "اختر اللغة",
+    "parentNavBarEnglish": "الإنجليزية",
+    "parentNavBarArabic": "العربية",
+    "parentNavBarLogoutConfirmation": "تأكيد تسجيل الخروج",
+    "parentNavBarLogoutPrompt": "هل أنت متأكد أنك تريد تسجيل الخروج؟",
+    "parentNavBarFooterVersion": "تطبيق التعلم الإصدار 2.0",
+    "parentNavBarProfile": "حساب تعريفي",
+    "improvementSuggestions": "اقتراحات للتحسين",
+    "ok": "حسناً",
+    "previous": "السابقة",
+    "storyCounter": "القصة {current} من {total}",
+    "story": "القصة",
+    "writeSummaryHere": "اكتب ملخصك هنا",
+    "summaryHint": "اكتب ملخصاً للقصة التي قرأتها...",
+    "checking": "جاري الفحص...",
+    "checkSummary": "فحص الملخص",
+    "storySummarizerGame": "لعبة تلخيص القصص",
+    "letterLevel2": "المستوي الثاني",
+    "recordYourVoice": "سجّل صوتك",
+    "stop": "إيقاف",
+    "errorTryAgain": "حدث خطأ، حاول مرة أخرى",
+    "readAloud": "اقرأ بصوت عالٍ",
+    "genderValidationError": "اختار النوع",
+    "birthdateValidation": "يرجى اختيار تاريخ الميلاد",
+    "usernameHint": "اسم المستخدم",
+    "tutorialCourseTitle": "اضغط هنا لاستكشاف الدورات التدريبية الخاصة بك!",
+    "tutorialCourseSubtitle": "اضغط للانتقال إلى قائمة الدورات",
+    "tutorialSkip": "تخطي",
+    "tutorialCourseCardTitle": "هذه هي دورتك",
+    "tutorialCourseCardDescription": "اضغط هنا للمتابعة.",
+    "tutorialPlayButtonTitle": "زر التشغيل",
+    "tutorialPlayButtonDescription": "اضغط على هذا الزر لبدء التمرين.",
+    "tutorialExpandButtonTitle": "عرض المزيد",
+    "tutorialExpandButtonDescription": "انقر لرؤية المزيد من المحتوى أو التفاصيل.",
+    "expandLevelsTitle": "عرض المستويات المتاحة",
+    "expandLevelsDescription": "اضغط على هذا الزر لاستكشاف جميع المستويات والألعاب المتاحة لهذا التمرين. يجب الضغط للمتابعة!",
+    "levelsSectionTitle": "مستويات الدورة",
+    "levelsSectionDescription": "هذه هي المستويات المتاحة لهذه الدورة. يحتوي كل مستوى على ألعاب وأنشطة مختلفة تساعدك على التعلم.",
+    "gamesNavigationTitle": "التنقل بين الألعاب",
+    "gamesNavigationDescription": "اضغط على أي لعبة للانتقال مباشرةً إلى تلك اللعبة ضمن الدورة.",
+    "mainCourseNavigationTitle": "التنقل إلى الدورة الرئيسية",
+    "mainCourseNavigationDescription": "اضغط على زر التشغيل للانتقال إلى صفحة الدورة الرئيسية. يجب الضغط لإكمال الشرح!",
+    "welcome": "مرحبا",
+    "loginSubtitle": "مرحبًا بعودتك! الرجاء تسجيل الدخول للمتابعة",
+    "drawerMenuTitle": "قائمة التنقل",
+    "drawerMenuDescription": "اضغط على قائمة التنقل لفتح القائمة الجانبية. يمكنك تغيير اللغة أو تسجيل الخروج من هنا.",
+    "profileTabTitle": "ملفك الشخصي",
+    "profileTabDescription": "اضغط هنا لعرض وتحديث معلومات ملفك الشخصي. قم بإدارة التفاصيل والتفضيلات الخاصة بك.",
+    "coursesTabTitle": "دوراتك",
+    "coursesTabDescription": "يمكنك الوصول إلى جميع دوراتك من هنا. تصفح الدروس المتاحة وتابع تقدمك.",
+    "hello": "مرحباً",
+    "phoneNumber": "رقم الهاتف",
+    "nationality": "الجنسية",
+    "gender": "الجنس",
+    "birthday": "تاريخ الميلاد",
+    "age": "العمر",
+    "personalInfo": "المعلومات الشخصية",
+    "errorTitle": "عذراً! حدث خطأ ما",
+    "noData": "لا توجد بيانات متاحة",
+    "email": "البريد الإلكتروني",
+    "orderSentencesTitle": "رتب الجمل بالترتيب الصحيح",
+    "round": "الجولة",
+    "of2": "من",
+    "correctAnswer2": "إجابة صحيحة!",
+    "wrongAnswer2": "إجابة خاطئة",
+    "points": "النقاط",
+    "endGame": "إنهاء اللعبة",
+    "nextRound": "الجولة التالية",
+    "performanceExcellent": "ممتاز! أداء رائع جداً!",
+    "performanceVeryGood": "جيد جداً! أداء ممتاز!",
+    "performanceGood": "جيد! يمكنك تحسين أدائك!",
+    "performanceTryAgain": "حاول مرة أخرى لتحسين نتيجتك!",
+    "percentage": "النسبة المئوية",
+    "backToMenu": "العودة للقائمة",
+    "error": "خطأ",
+    "sentenceOrdering": "ترتيب الجمل",
+    "playingNow": "جاري التشغيل...",
+    "revealSentences": "اكشف الجمل",
+    "confirmAnswer": "تأكيد الإجابة",
+    "dragSentencesHint": "اسحب الجمل هنا لترتيبها",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "close": "إغلاق",
+    "accuracy": "الدقة",
+    "title1": "مرحباً بك في عالمك الخاص\nحيث متعة التعلم",
+    "desc1": "أنا صديقك (التطبيق) دعني أخذك معي في رحلة يومية نحو التقدم و التطوير",
+    "button1": "ابدأ",
+    "title2": "معاً سنتعلم كيف نقرأ\nونكتب اللغة العربية بشكل سليم",
+    "desc2": "ستكون رحلة مليئة بالمرح لكن لا داعي للقلق سنتعلم خطوة بخطوة حتى تصبح محترفاً.",
+    "button2": "استمرار",
+    "title3": "لا تخف من التجربة،\nحاول بلا توقف حتى تكسر حاجز الخوف",
+    "desc3": "فلا شيء يستطيع إيقافك",
+    "submitbutton": "تم",
+    "introTitle": "كَيْفَ تُوَدُّ التَّسْجِيلَ؟",
+    "guardianTitle": "سجل لمن تحب",
+    "guardianDescription": "تسجيلك كولي أمر يمكنك من تسجيل و متابعة تقدم أحيانك، سواء كالوا أبناءك، طلابك، أو أي شخص تحت مسئوليتك",
+    "userTitle": "سجل لنفسك",
+    "userDescription": "إذا كان عمرك يزيد عن 12 سنة. يمكنك الآن التسجيل بنفسك بسهولة فقط اضغط على زر مستخدم البدء.",
+    "guardianButton": "ولي أمر",
+    "userButton": "مستخدم",
+    "loginTitle": "تسجيل الدُّخول",
+    "emailHint": "البريد الالكتروني",
+    "passwordHint": "●●●●●●●",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "loginButton": "تسجيل الدخول",
+    "orContinueWith": "أو اكمل بواسطة",
+    "noAccount": "ليس لديك حساب؟",
+    "createAccountUser": "إنشاء حساب مستخدم",
+    "createAccountGaurdian": "إنشاء حساب ولي أمر",
+    "forgotPasswordTitle": "نَسِيتَ كَلِمَةَ المَرُورِ؟",
+    "forgotPasswordHint": "أدخل رقم الهاتف أو البريد الإلكتروني المسجل",
+    "phoneHint": "+20******336",
+    "emailHint2": "******aid@gmail.com",
+    "continueButton": "استمرار",
+    "otpPrompt": "بِرَجَاءِإدْخَالِ رَمْزِالتَّحْقق",
+    "changePasswordTitle": "تَغْيِيرُ كَلِمَةِ المَرُورِ",
+    "changepasswordHint": "كلمة المرور",
+    "confirmPasswordHint": "تأكيد كلمة المرور",
+    "errorEmptyEmail": "لا يمكن ترك البريد الإلكتروني فارغًا",
+    "errorEmptyPassword": "لا يمكن ترك كلمة المرور فارغة",
+    "successLogin": "تم تسجيل الدخول بنجاح",
+    "invalidCredentials": "اسم المستخدم أو كلمة المرور غير صحيحة. حاول مرة أخرى.",
+    "levelLabel": "انطق الكلمة",
+
+    "greeting": "مرحباً {name}",
+    "@greeting": {
+        "description": "Greeting for the user with their name",
+        "placeholders": {
+        "name": {}
+        }
+    },
+    "dontWorry": "لا تخف لا داعي للقلق",
+    "attemptsLeft": "متبقي لك {count} محاولات",
+    "@attemptsLeft": {
+        "description": "Shows how many attempts are left",
+        "placeholders": {
+        "count": {}
+        }
+    },
+    "noWordsAvailable": "لا توجد كلمات في هذا المستوى.",
+    "recordingTimeout": "انتهى الوقت المسموح للتسجيل!",
+    "recordingStartError": "خطأ في بدء التسجيل: {error}",
+    "@recordingStartError": {
+        "placeholders": {
+        "error": {}
+        }
+    },
+    "ignoredRecording": "تم تجاهل التسجيل",
+    "processingRecording": "جاري معالجة التسجيل...",
+    "processingError": "حدث خطأ أثناء معالجة التسجيل",
+    "outOfTries": "انتهت المحاولات! سننتقل للكلمة التالية...",
+    "nextButton": "التالي",
+    "transcriptLabel": "النص المدخل",
+    "recordingError": "خطأ: {error}",
+    "@recordingError": {
+        "placeholders": {
+        "error": {}
+        }
+    },
+    "confirm": "تأكيد",
+    "feedbackWidgetAnalyzing": "جاري التحليل...",
+    "progressCompleted": "{percent}% تم الإنجاز",
+    "@progressCompleted": {
+      "description": "Shows how much progress has been completed",
+      "placeholders": {
+        "percent": {}
+      }
+    },
+    "progressPoints": "{points} نقطة",
+    "@progressPoints": {
+      "description": "Shows how many points or lessons completed",
+      "placeholders": {
+        "points": {}
+      }
+    },
+    "exerciseProgressLabel": "التقدم",
+    "@exerciseProgressLabel": {
+      "description": "Label for progress bar"
+    },
+    "exerciseProgressPercent": "%{percent}",
+    "@exerciseProgressPercent": {
+      "description": "Format string for progress percentage",
+      "placeholders": {
+        "percent": {}
+      }
+    },
+    "helloLabel": "مرحباً،",
+    "searchCoursesHint": "ابحث عن الدورات...",
+    "continueLearning": "واصل التعلُّم",
+    "availableExercises": "التمارين المتاحة",
+    "seeAll": "عرض الكل",
+    "noExercisesAvailable": "لا توجد تمارين متاحة",
+    "bottomNavHome": "الرئيسية",
+    "bottomNavCourses": "الدورات",
+    "bottomNavProfile": "الملف الشخصي",
+    "bottomNavMenu": "القائمة",
+    "levels": "المستويات",
+    "level": "المستوى",
+    "selectLevelToStart": "اختر مستوى للبدء باللعب",
+    "games": "ألعاب",
+    "errorLoadingLevels": "خطأ في تحميل المستويات",
+    "tryAgain": "حاول مرة أخرى",
+    "noLevelsAvailable": "لا توجد مستويات متاحة لهذا التمرين",
+    "selectGameToPlay": "اختر لعبة للبدء",
+    "noGamesAvailable": "لا توجد ألعاب متاحة لهذا المستوى",
+    "playGame": "العب الآن",
+    "monthsOrderTitle": "ترتيب الشهور",
+    "monthsOrderHeader": "رتب {count} شهور السنة",
+    "@monthsOrderHeader": {
+        "description": "Header for how many months to order in the game",
+        "placeholders": {"count": {}}
+    },
+    "monthsOrderHelpDrag": "اسحب الشهور من الأسفل وضعها في الترتيب الصحيح",
+    "monthsOrderHelpOrder": "رتب الشهور من يناير إلى آخر شهر في المستوى",
+    "monthsOrderHelpListen": "اضغط على الشهر لسماع اسمه",
+    "monthsOrderHelpTranslate": "اضغط على زر الترجمة لتبديل بين الأسماء العربية والشامية",
+    "translateMonthsTooltip": "تبديل أسماء الشهور",
+    "monthsOrderSuccess": "أحسنت! لقد رتبت الشهور بشكل صحيح.",
+    "playAgain": "العب مرة أخرى",
+    "all": "جميع",
+    "monthsOrderList": "يناير, فبراير, مارس, أبريل, مايو, يونيو, يوليو, أغسطس, سبتمبر, أكتوبر, نوفمبر, ديسمبر",
+    "@monthsOrderList": {
+        "description": "أسماء الشهور العربية للعبة ترتيب الشهور."
+    },
+    "monthsOrderLevelInstruction": "المستوى {level}: رتب {count} أشهر {direction}",
+    "@monthsOrderLevelInstruction": {
+        "description": "تعليمات لكل مستوى توضح عدد الأشهر المطلوب ترتيبها والاتجاه",
+        "placeholders": {
+            "level": {},
+            "count": {},
+            "direction": {}
+        }
+    },
+    "orderAscending": "من البداية إلى النهاية",
+    "orderDescending": "من النهاية إلى البداية",
+    "levelSuccess": "🎉 رائع! لقد أكملت المستوى {level}!",
+    "@levelSuccess": {
+        "description": "رسالة النجاح عند إكمال مستوى",
+        "placeholders": {
+            "level": {}
+        }
+    },
+    "levelFailure": "لا تقلق! التمرين يؤدي إلى الإتقان. حاول هذا المستوى مرة أخرى!",
+    "levelRetry": "واصل! أنت تتحسن مع كل محاولة!",
+    "finalLevelSuccess": "🌟 مذهل! لقد أتقنت ترتيب جميع الأشهر!",
+    "gameCompleted": "تم الإكمال!",
+    "orderMonthsCorrectly": "رتب الأشهر بشكل صحيح.",
+    "learnerNavBarHome": "الرئيسية",
+    "learnerNavBarCourses": "الدورات",
+    "learnerNavBarProfile": "الملف الشخصي",
+    "learnerNavBarMenu": "القائمة",
+    "logoutSubtitle": "تسجيل الخروج بأمان",
+    "cancelButton": "إلغاء",
+    "logoutConfirmationTitle": "تأكيد تسجيل الخروج",
+    "logoutConfirmationMessage": "هل أنت متأكد أنك تريد تسجيل الخروج؟\nستحتاج إلى تسجيل الدخول مرة أخرى.",
+    "logoutButton": "تسجيل الخروج",
+    "chooseLanguageTitle": "اختر اللغة",
+    "chooseLanguageSubtitle": "حدد لغتك المفضلة",
+    "englishLanguage": "الإنجليزية",
+    "arabicLanguage": "العربية",
+    "defaultUserName": "مستخدم",
+    "defaultUsername": "اسم المستخدم",
+        "appTitle": "تمرين كشف الأشياء",
+    "bringObject": "أحضر {object}",
+    "@bringObject": {
+        "placeholders": {
+            "object": {
+                "type": "String"
+            }
+        }
+    },
+    "objectDetectionExercise": "تمرين كشف الأشياء",
+    "objectDetectionHint": "وجه الكاميرا نحو الشيء المطلوب لإكمال التمرين",
+    "hint": "وجه الكاميرا نحو الشيء المطلوب لإكمال التمرين",
+    "spoon": "ملعقة",
+    "cup": "كوب",
+    "pen": "قلم",
+    "fork": "شوكة",
+    "plate": "طبق",
+    "objectDetected": "رائع! تم اكتشاف الشيء!",
+    "objectNotFound": "لم يتم اكتشاف الشيء. استمر في المحاولة!",
+    "nextExercise": "التمرين التالي",
+    "score": "النتيجة: {score}",
+    "@score": {
+        "placeholders": {
+            "score": {
+                "type": "int"
+            }
+        }
+    },
+    "loadingWords": "جاري تحميل الكلمات...",
+    "@loadingWords": {
+        "description": "Message shown while fetching words from the server"
+    },
+    
+    "allWordsCompleted": "عمل رائع! لقد أكملت جميع الكلمات!",
+    "@allWordsCompleted": {
+        "description": "Success message when user finishes all words in the exercise"
+    },
+    
+    "congratulations": "مبروك!",
+    "@congratulations": {
+        "description": "Title for completion dialog"
+    },
+    
+    "completedAllWords": "لقد أكملت بنجاح جميع الكلمات في هذا التمرين!",
+    "@completedAllWords": {
+        "description": "Message in completion dialog explaining the achievement"
+    },
+    
+    "finish": "إنهاء",
+    "@finish": {
+        "description": "Button text to finish the exercise and go back"
+    },
+    
+    "startOver": "ابدأ من جديد",
+    "@startOver": {
+        "description": "Button text to restart the exercise with the same words"
+    },
+    
+    "viewResults": "عرض النتائج",
+    "@viewResults": {
+        "description": "Button text when all words are completed to view final results"
+    },
+    "locked": "مقفل",
+    "@locked": {
+        "description": "Text shown when a game is locked"
+    },
+    "gameLockedMessage": "هذه اللعبة مقفلة. أكمل المستويات السابقة لإلغاء قفلها.",
+    "@gameLockedMessage": {
+        "description": "Message shown when user tries to access a locked game"
+    },
+    "level_one_live_camera": "المستوى الأول - كاميرا مباشرة",
+    "@level_one_live_camera": {
+        "description": "Title for level one live camera screen"
+    },
+    "new_word": "كلمة جديدة",
+    "@new_word": {
+        "description": "Button text for getting a new word"
+    },
+    "target_word": "الكلمة المطلوبة",
+    "@target_word": {
+        "description": "Label for the target word section"
+    },
+    "analyzing": "جاري التحليل...",
+    "@analyzing": {
+        "description": "Text shown when analyzing the camera input"
+    },
+    "preparing_camera": "جاري تحضير الكاميرا...",
+    "@preparing_camera": {
+        "description": "Text shown when initializing the camera"
+    },
+    "result": "النتيجة",
+    "@result": {
+        "description": "Label for the detection result"
+    },
+    "correct_answer": "إجابة صحيحة! أحسنت!",
+    "@correct_answer": {
+        "description": "Text shown when the answer is correct"
+    },
+    "try_again": "حاول مرة أخرى",
+    "@try_again": {
+        "description": "Text shown when the answer is incorrect"
+    },
+    "point_camera_instruction": "وجه الكاميرا نحو الكائن المطلوب داخل الإطار الأحمر",
+    "@point_camera_instruction": {
+        "description": "Instruction for pointing the camera at the target object"
+    },
+    "processing": "جاري المعالجة",
+    "@processing": {
+        "description": "Status text when processing"
+    },
+    "ready_to_capture": "جاهز للتصوير",
+    "@ready_to_capture": {
+        "description": "Status text when ready to capture"
+    },
+    "errorReadingResult": "❌ خطأ في قراءة النتيجة",
+    "congratsAllWordsCompleted": "أحسنت! لقد أكملت جميع الكلمات.",
+    "learnerIdRequired": "معرف المتعلم مطلوب",
+    "@learnerIdRequired": {
+        "description": "Error message when learner ID is missing"
+    },
+    
+    "profileDataLoadError": "لا يمكن تحميل بعض بيانات الملف الشخصي",
+    "@profileDataLoadError": {
+        "description": "Error message when profile data fails to load"
+    },
+    
+    "profileInformation": "معلومات الملف الشخصي",
+    "@profileInformation": {
+        "description": "Title for profile information section"
+    },
+    
+    "email": "البريد الإلكتروني",
+    "@email": {
+        "description": "Label for email field"
+    },
+    
+    "age": "العمر",
+    "@age": {
+        "description": "Label for age field"
+    },
+    
+    "gender": "الجنس",
+    "@gender": {
+        "description": "Label for gender field"
+    },
+    
+    "notProvided": "غير متوفر",
+    "@notProvided": {
+        "description": "Text shown when information is not available"
+    },
+    
+    "learningJourney": "رحلة التعلم",
+    "@learningJourney": {
+        "description": "Title for learning statistics section"
+    },
+    
+    "totalTime": "الوقت الإجمالي",
+    "@totalTime": {
+        "description": "Label for total time spent learning"
+    },
+    
+    "achievement": "الإنجاز",
+    "@achievement": {
+        "description": "Label for achievement level"
+    },
+    
+    "personalDetails": "التفاصيل الشخصية",
+    "@personalDetails": {
+        "description": "Title for personal details section"
+    },
+    
+    "birthDate": "تاريخ الميلاد",
+    "@birthDate": {
+        "description": "Label for birth date field"
+    },
+    
+    "parentName": "اسم الوالد",
+    "@parentName": {
+        "description": "Label for parent name field"
+    },
+    
+    "loadingProfile": "جاري تحميل الملف الشخصي...",
+    "@loadingProfile": {
+        "description": "Loading message for profile"
+    },
+    
+    "failedToLoadProfile": "فشل في تحميل الملف الشخصي",
+    "@failedToLoadProfile": {
+        "description": "Error message when profile loading fails"
+    },
+    
+    
+    "profileNotFound": "الملف الشخصي غير موجود",
+    "@profileNotFound": {
+        "description": "Message when profile is not found"
+    },
+    
+    "yearsOld": "{age} سنة",
+    "@yearsOld": {
+        "description": "Format for displaying age",
+        "placeholders": {
+        "age": {
+            "type": "int",
+            "example": "25"
+        }
+        }
+    },
+    
+    "unknown": "غير معروف",
+    "@unknown": {
+        "description": "Text for unknown values"
+    },
+    
+    "minutesFormat": "{minutes} د",
+    "@minutesFormat": {
+        "description": "Format for displaying minutes",
+        "placeholders": {
+        "minutes": {
+            "type": "int",
+            "example": "30"
+        }
+        }
+    },
+    
+    "hoursMinutesFormat": "{hours} س {minutes} د",
+    "@hoursMinutesFormat": {
+        "description": "Format for displaying hours and minutes",
+        "placeholders": {
+        "hours": {
+            "type": "int",
+            "example": "2"
+        },
+        "minutes": {
+            "type": "int",
+            "example": "30"
+        }
+        }
+    },
+    "explorer": "مستكشف",
+    "@explorer": {
+        "description": "لقب مستوى الإنجاز للمبتدئين مع 0 دقيقة"
+    },
+    
+    "risingStar": "نجم صاعد",
+    "@risingStar": {
+        "description": "لقب مستوى الإنجاز للمستخدمين مع أقل من ساعة واحدة من التعلم"
+    },
+    
+    "brightMind": "عقل مشرق",
+    "@brightMind": {
+        "description": "لقب مستوى الإنجاز للمستخدمين مع أقل من 5 ساعات من التعلم"
+    },
+    
+    "knowledgeSeeker": "باحث عن المعرفة",
+    "@knowledgeSeeker": {
+        "description": "لقب مستوى الإنجاز للمستخدمين مع أقل من 10 ساعات من التعلم"
+    },
+    
+    "wisdomBuilder": "بناء الحكمة",
+    "@wisdomBuilder": {
+        "description": "لقب مستوى الإنجاز للمستخدمين مع أقل من 20 ساعة من التعلم"
+    },
+    
+    "masterLearner": "متعلم متمكن",
+    "@masterLearner": {
+        "description": "لقب مستوى الإنجاز للمستخدمين مع أقل من 40 ساعة من التعلم"
+    },
+    
+    "learningChampion": "بطل التعلم",
+    "@learningChampion": {
+        "description": "لقب مستوى الإنجاز للمستخدمين مع 40+ ساعة من التعلم"
+    }
+}

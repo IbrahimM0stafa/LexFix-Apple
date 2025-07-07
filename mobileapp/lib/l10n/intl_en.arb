@@ -1,0 +1,772 @@
+{
+    "@@locale": "en",
+    "title": "Create Account",
+    "signuptitlename": "Name",
+    "signupinputfieldname": "ex:MohamedZakaria",
+    "signuptitleusername": "username",
+    "signupinputfieldusername": "ex:ibrahimzekas123",
+    "signuptitleemail": "email",
+    "signupinputfieldemail": "ex:ibrahimzekas@gmail.com",
+    "signuptitlephonenumber": "phone number",
+    "signuptitlepassword": "password",
+    "signupinputfieldpassword": "ex:MyP@ssw0rd123",
+    "signuptitleconfirmpassword": "confirm password",
+    "signup_password_mismatch": "Don't Match",
+    "signuptitlebirthdate": "Birthdate",
+    "signupinputfieldbirthdate": "ex:15/7/2002",
+    "signuptitlenationality": "Nationality",
+    "signupinputfieldnationality": "ex:Egyptian",
+    "phonenumbersearch": "search",
+    "genderSelect": "Select Gender",
+    "genderSelected": "Selected:",
+    "genderMale": "Male",
+    "genderFemale": "Female",
+    "continuesignuptitle": "Child Registration",
+    "createaccountbutton": "Create Account",
+    "signupbutton": "Continue",
+    "parentNavBarHome": "Home",
+    "parentNavBarChangeLanguage": "Choose Language",
+    "parentNavBarSettings": "Settings",
+    "parentNavBarLogout": "Logout",
+    "usernameRequired": "Username must be entered",
+    "usernameShort": "Username must be at least 3 characters",
+    "usernameExist": "This username is already taken",
+    "emailRequired": "Email must be entered",
+    "emailInvalid": "Enter a valid email address",
+    "emailExist": "This email is already registered",
+    "passwordRequired": "Password must be entered",
+    "passwordShort": "Password must be at least 8 characters",
+    "confirmPasswordRequired": "Confirm password is required",
+    "passwordMismatch": "Passwords do not match",
+    "adultSignupTitle": "Create Account",
+    "dashboard_title": "'s Dashboard",
+    "welcome_message": "Welcome Back, ",
+    "explore_message": "Let's explore some insights today",
+    "categories": "Categories",
+    "tips": "Tips",
+    "learner_members": "Learner Members",
+    "add_word": "Add Word",
+    "learner_progress": "Learners Progress",
+    "no_progress_data": "No data available.",
+    "view_details": "view Detials",
+    "addNewLearner": "Add New Learner",
+    "cancel": "Cancel",
+    "add": "Add",
+    "clickToAddLearners": "Click the + button to add learners.",
+    "showMore": "Show more",
+    "dashboardTitle": "{name} Dashboard",
+    "exercise2Title": "Exercise 2",
+    "fishGameTitle": "Fish Game with Letters",
+    "roundLabel": "Round {current} of {total}",
+    "listenToLetter": "Listen to Letter",
+    "howToPlayTitle": "How to Play",
+    "howToPlayDescription": "Listen to the letter and find the matching fish. Tap on the correct fish. Earn a point for each correct answer!",
+    "okButton": "OK",
+    "correctAnswer": "🎉 Correct!",
+    "wrongAnswer": "❌ Wrong! The correct letter is: {letter}",
+    "greatJob": "🎉 Great job! Your score: {score} out of {total}",
+    "tryAgain2": "😊 Good try! Your score: {score} out of {total}",
+    "listen": "Listen",
+    "traceThisLetter": "📝 Trace this letter: {letter}",
+    "finishTracing": "✅ Finish Tracing",
+    "completedAllLetters": "🎉 You've completed all letters!",
+    "encouragementMessage": "👏 Well done! You traced all 28 Arabic letters!",
+    "howToTrace": "📚 How to Trace",
+    "instructions": "1. Trace the letter with your finger.\n2. Try to stay on the shape.\n3. Press Done when finished.",
+    "gotIt": "Got it!",
+    "done": "✅ Done",
+    "clear": "🧹 Clear",
+    "traceTitle": "✍️ Trace the letter",
+    "greatJob2": "🎉 Great job!",
+    "restart": "Restart",
+    "tryAgain3": "❌ Try Again",
+    "retry": "Retry",
+    "wellDone": "Well done! ✅",
+    "youTracedCorrectly": "You traced the letter correctly!",
+    "next": "Next",
+    "spellingGame": "Spelling Game",
+    "help": "Help",
+    "instructionsTitle": "How to Play",
+    "instruction1": "Drag the letters into the correct order.",
+    "instruction2": "If the answer is correct, you'll get a new word.",
+    "instruction3": "Try to complete all words and get a high score!",
+    "wordsGame3Title": "Months Game",
+    "verify": "Verify",
+    "drawLetter": "Draw the letter \"{letter}\"",
+    "drawInstruction": "Touch and draw anywhere on the canvas",
+    "strokeCount": "Strokes: {count}",
+    "pointCount": "Points: {count}",
+    "gameOverTitle": "🎮 Game Over",
+    "greatJobMotivation": "🎉 Great job! You're doing amazing!",
+    "tryAgainMotivation": "💪 Keep going! You can do it!",
+    "correctFeedback": "Well done! 🎉",
+    "wrongFeedback": "Try again",
+    "roundLabel2": "Round",
+    "timeLabel": "Time",
+    "exit": "Exit",
+    "gameFinished": "Game Over!",
+    "info": "Information about Training",
+    "instructionTimer": "Each question has 5 seconds to answer.",
+    "instructionLookCarefully": "Look carefully at the direction shape and choose the correct sentence.",
+    "instructionAnswerShown": "After each question, the correct answer will be shown.",
+    "ttsInstructions": "Each question has 5 seconds to answer. Look carefully at the direction shape and choose the correct sentence. After each question, the correct answer will be shown.",
+    "startExercise": "Start Exercise",
+    "directions": "Directions",
+    "tapArrowToHear": "Tap the arrow to hear the direction",
+    "directionExerciseTitle": "Direction Exercise",
+    "seconds": "{count} seconds",
+    "questionProgress": "Question {current} / {total}",
+    "whatIsDirection": "What is the direction?",
+    "listenAgain": "Listen again ({remaining} attempts left)",
+    "correct": "Correct! ✅",
+    "incorrect": "Wrong! ❌",
+    "correctAnswerIs": "Correct answer: {answer}",
+    "tryAgainEncouragement": "Try again! 💪",
+    "excellent": "Excellent! 🎉",
+    "bravo": "Bravo! 👏",
+    "amazing": "Amazing! 😎",
+    "gameName": "Direction Game",
+    "exerciseInfoTitle": "Exercise Information",
+    "timerInfo": "Each question has 8 seconds to answer.",
+    "dragInfo": "Drag the image to the correct direction.",
+    "correctDirectionInfo": "After each question, the correct direction will be shown.",
+    "directionsTitle": "Directions",
+    "tapToHearDirection": "Tap the arrow to hear the direction",
+    "speakDirectionTemplate": "The direction is {direction}",
+    "instructionSpeech": "Each question has 8 seconds to answer. Drag the image to the correct direction. After each question, the correct direction will be shown.",
+    "returnBack": "Return",
+    "dontWorryTryAgain": "Don't worry, try again",
+    "tryingHardGreat": "You're trying hard, that's great",
+    "tryingIsFirstStep": "Trying is the first step",
+    "everyTryMakesStronger": "Every try makes you stronger",
+    "dontGiveUpLearning": "Don't give up, learning takes time",
+    "learningNeedsPatience": "Learning needs patience",
+    "keepTryingProgressing": "Keep trying, you're progressing",
+    "veryGreat": "Very great",
+    "excellentWork": "Excellent work",
+    "verySmart": "You're very smart",
+    "keepProgressing": "Keep progressing",
+    "up": "Up",
+    "down": "Down",
+    "right": "Right",
+    "left": "Left",
+    "upRight": "Up Right",
+    "downRight": "Down Right",
+    "upLeft": "Up Left",
+    "downLeft": "Down Left",
+    "cat": "Cat",
+    "apple": "Apple",
+    "car": "Car",
+    "book": "Book",
+    "ball": "Ball",
+    "dragImageToCorrectDirection": "Drag the image to the correct direction",
+    "correctDirectionIs": "The correct direction is {direction}",
+    "exerciseFinished": "Exercise Finished",
+    "exerciseCompleted": "Exercise Completed",
+    "finalScore": "Final Score: {score} out of {total}",
+    "placeImageInDirection": "Place {item} in {direction} direction",
+    "exitExerciseQuestion": "هل تريد الخروج من التمرين؟",
+    "progressWillBeLost": "سيتم فقدان تقدمك",
+    "secondsRemaining": "{seconds} ثواني متبقية",
+    "dragImageToDirection": "اسحب {item} إلى اتجاه {direction}",
+    "helpful_tips": "Helpful tips for learning",
+    "manage_learners": "Manage your learners",
+    "add_vocabulary": "Add new vocabulary",
+    "track_progress": "Track learning progress",
+    "explore": "Explore",
+    "search_hint": "Search for activities...",
+    "recent_activity": "Recent Activity",
+    "great_progress": "Great Progress!",
+    "learners_completed_activities": "Your learners completed {count} activities today",
+    "today": "Today",
+    "tips_title": "Tips",
+    "track_learning_progress": "Track Learning Progress",
+    "monitor_daily_activities": "Monitor daily learning activities",
+    "progress_summary": "Progress Summary",
+    "no_learning_activities": "No learning activities recorded for this day",
+    "stat_total": "Total",
+    "stat_correct": "Correct",
+    "stat_incorrect": "Incorrect",
+    "exercise_breakdown": "Exercise Breakdown",
+    "label_letters": "Letters",
+    "label_words": "Words",
+    "label_sentences": "Sentences",
+    "label_games": "Games",
+    "game_summary": "Game Summary",
+    "game_sessions": "game sessions",
+    "total_attempts": "total attempts",
+    "quest_complete": "Quest Complete",
+    "quest_pending": "Quest Pending",
+    "award_won": "Award Won",
+    "no_award": "No Award",
+    "learner_details": "Learner Details",
+    "no_learner_data_available": "No learner data available.",
+    "parentNavBarLearnerMembers": "Learner Members",
+    "parentNavBarLearnersProgress": "Learners Progress",
+    "parentNavBarChooseLanguage": "Choose Language",
+    "parentNavBarEnglish": "English",
+    "parentNavBarArabic": "Arabic",
+    "parentNavBarLogoutConfirmation": "Logout Confirmation",
+    "parentNavBarLogoutPrompt": "Are you sure you want to logout?",
+    "parentNavBarFooterVersion": "Learning App v2.0",
+    "parentNavBarProfile": "Profile",
+    "improvementSuggestions": "Improvement Suggestions",
+    "ok": "OK",
+    "previous": "Previous",
+    "storyCounter": "Story {current} of {total}",
+    "story": "Story",
+    "writeSummaryHere": "Write Your Summary Here",
+    "summaryHint": "Write a summary of the story you read...",
+    "checking": "Checking...",
+    "checkSummary": "Check Summary",
+    "storySummarizerGame": "Story Summarizer Game",
+    "letterLevel2": "Level 2",
+    "recordYourVoice": "Record your voice",
+    "stop": "Stop",
+    "errorTryAgain": "An error occurred, try again",
+    "readAloud": "Read Aloud",
+    "genderValidationError": "Please select a gender",
+    "birthdateValidation": "Please select a birthdate",
+    "usernameHint": "Username",
+    "tutorialCourseTitle": "Click here to explore your courses!",
+    "tutorialCourseSubtitle": "Tap to navigate to your course list",
+    "tutorialSkip": "Skip",
+    "tutorialCourseCardTitle": "This is your course",
+    "tutorialCourseCardDescription": "Tap here to proceed.",
+    "tutorialPlayButtonTitle": "Play Button",
+    "tutorialPlayButtonDescription": "Tap this button to start the exercise.",
+    "tutorialExpandButtonTitle": "Expand View",
+    "tutorialExpandButtonDescription": "Click to see more content or details.",
+    "expandLevelsTitle": "View Available Levels",
+    "expandLevelsDescription": "Tap this button to explore all available levels and games for this exercise. You need to tap it to continue!",
+    "levelsSectionTitle": "Course Levels",
+    "levelsSectionDescription": "These are the available levels for this course. Each level includes unique games and activities to help you learn.",
+    "gamesNavigationTitle": "Games Navigation",
+    "gamesNavigationDescription": "Tap any game chip to go directly to that game within the course.",
+    "mainCourseNavigationTitle": "Main Course Navigation",
+    "mainCourseNavigationDescription": "Tap this play button to go to the main course page. You must tap it to complete the tutorial!",
+    "welcome": "Welcome",
+    "loginSubtitle": "Welcome back! Please sign in to continue",
+    "drawerMenuTitle": "Navigation Menu",
+    "drawerMenuDescription": "Tap these Navigation Menu to open the side menu. Here you can change your language preferences and log out when needed.",
+    "profileTabTitle": "Your Profile",
+    "profileTabDescription": "Tap here to view and update your profile information. Manage your personal details and preferences.",
+    "coursesTabTitle": "Your Courses",
+    "coursesTabDescription": "Access all your courses here. Browse available lessons, track your progress, and continue your learning journey.",
+    "hello": "Hello",
+    "phoneNumber": "Phone Number",
+    "nationality": "Nationality",
+    "gender": "Gender",
+    "birthday": "Birthday",
+    "age": "Age",
+    "personalInfo": "Personal Information",
+    "errorTitle": "Oops! Something went wrong",
+    "noData": "No profile data available",
+    "email": "Email",
+    "orderSentencesTitle": "Order the sentences correctly",
+    "round": "round",
+    "of2": "of",
+    "correctAnswer2": "Correct Answer!",
+    "wrongAnswer2": "Wrong Answer",
+    "points": "Points",
+    "endGame": "End Game",
+    "nextRound": "Next Round",
+    "performanceExcellent": "Excellent! Outstanding performance!",
+    "performanceVeryGood": "Very good! Great job!",
+    "performanceGood": "Good! You can do even better!",
+    "performanceTryAgain": "Try again to improve your score!",
+    "percentage": "Percentage",
+    "backToMenu": "Back to Menu",
+    "error": "Error",
+    "sentenceOrdering": "Sentence Ordering",
+    "playingNow": "Playing...",
+    "revealSentences": "Reveal Sentences",
+    "confirmAnswer": "Confirm Answer",
+    "dragSentencesHint": "Drag the sentences here to arrange them",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "close": "Close",
+    "accuracy": "accuracy",
+    "title1": "Welcome to your special world\nwhere learning is fun",
+    "desc1": "I'm your friend (the app). Let me take you on a daily journey of progress and growth.",
+    "button1": "Start",
+    "title2": "Together, we will learn to read\nand write Arabic properly",
+    "desc2": "It will be a fun journey, step by step, until you become an expert.",
+    "button2": "Continue",
+    "title3": "Don't fear trying,\nkeep going until you break the fear barrier",
+    "desc3": "Nothing can stop you.",
+    "submitbutton": "Done",
+    "introTitle": "How would you like to register?",
+    "guardianTitle": "Register for someone you care about",
+    "guardianDescription": "Registering as a guardian allows you to track and follow the progress of your loved ones, whether they are your children, students, or anyone under your responsibility.",
+    "userTitle": "Register for yourself",
+    "userDescription": "If you are older than 12, you can now easily register for yourself by clicking the user start button.",
+    "guardianButton": "Guardian",
+    "userButton": "User",
+    "loginTitle": "Login",
+    "emailHint": "Email",
+    "passwordHint": "●●●●●●●",
+    "forgotPassword": "Forgot Password?",
+    "loginButton": "Login",
+    "orContinueWith": "or continue with",
+    "noAccount": "Don’t have an account?",
+    "createAccountUser": "Create a user account",
+    "createAccountGaurdian": "Create a gaurdian account",
+    "forgotPasswordTitle": "Forgot Password?",
+    "forgotPasswordHint": "Enter your registered phone or email",
+    "phoneHint": "+20******336",
+    "emailHint2": "******aid@gmail.com",
+    "continueButton": "Continue",
+    "otpPrompt": "Please enter the verification code",
+    "changePasswordTitle": "Change Password",
+    "changepasswordHint": "Password",
+    "confirmPasswordHint": "Confirm Password",
+    "errorEmptyEmail": "Email cannot be empty",
+    "errorEmptyPassword": "Password cannot be empty",
+    "successLogin": "Login successful",
+    "invalidCredentials": "Invalid username or password. Please try again.",
+    "levelLabel": "spell the word",
+    "greeting": "Hello {name}",
+    "@greeting": {
+        "description": "Greeting for the user with their name",
+        "placeholders": {
+        "name": {}
+        }
+    },
+    "dontWorry": "Don’t worry, it’s okay",
+    "attemptsLeft": "{count} attempts left",
+    "@attemptsLeft": {
+        "placeholders": {
+        "count": {}
+        }
+    },
+    "noWordsAvailable": "No words available at this level.",
+    "recordingTimeout": "Recording time limit reached!",
+    "recordingStartError": "Error starting recording: {error}",
+    "@recordingStartError": {
+        "placeholders": {
+        "error": {}
+        }
+    },
+    "ignoredRecording": "Recording ignored",
+    "processingRecording": "Processing your recording...",
+    "processingError": "An error occurred while processing",
+    "outOfTries": "No attempts left! Moving to the next word...",
+    "nextButton": "Next",
+    "transcriptLabel": "Transcript",
+    "recordingError": "Error: {error}",
+    "@recordingError": {
+        "placeholders": {
+        "error": {}
+        }
+    },
+    "confirm": "Confirm",
+    "feedbackWidgetAnalyzing": "Analyzing...",
+    "progressCompleted": "{percent}% completed",
+    "@progressCompleted": {
+      "description": "Shows how much progress has been completed",
+      "placeholders": {
+        "percent": {}
+      }
+    },
+    "progressPoints": "{points} pts",
+    "@progressPoints": {
+      "description": "Shows how many points or lessons completed",
+      "placeholders": {
+        "points": {}
+      }
+    },
+    "exerciseProgressLabel": "Progress",
+    "@exerciseProgressLabel": {
+      "description": "Label for progress bar"
+    },
+    "exerciseProgressPercent": "{percent}%",
+    "@exerciseProgressPercent": {
+      "description": "Format string for progress percentage",
+      "placeholders": {
+        "percent": {}
+      }
+    },
+    "helloLabel": "Hello,",
+    "searchCoursesHint": "Search courses...",
+    "continueLearning": "Continue Learning",
+    "availableExercises": "Available Exercises",
+    "seeAll": "See All",
+    "noExercisesAvailable": "No exercises available",
+    "bottomNavHome": "Home",
+    "bottomNavCourses": "Courses",
+    "bottomNavProfile": "Profile",
+    "bottomNavMenu": "Menu",
+    "levels": "Levels",
+    "level": "Level",
+    "selectLevelToStart": "Select a level to start playing",
+    "games": "Games",
+    "errorLoadingLevels": "Error loading levels",
+    "tryAgain": "Try Again",
+    "noLevelsAvailable": "No levels available for this exercise",
+    "selectGameToPlay": "Select a game to start playing",
+    "noGamesAvailable": "No games available for this level",
+    "playGame": "Play Now",
+    "monthsOrderTitle": "Order the Months",
+    "monthsOrderHeader": "Order {count} months of the year",
+    "@monthsOrderHeader": {
+        "description": "Header for how many months to order in the game",
+        "placeholders": {"count": {}}
+    },
+    "monthsOrderHelpDrag": "Drag the months from below and place them in the correct order",
+    "monthsOrderHelpOrder": "Order the months from January to the last month in the level",
+    "monthsOrderHelpListen": "Tap the month to hear its name",
+    "monthsOrderHelpTranslate": "Tap the translate button to switch between Arabic and Levantine names",
+    "translateMonthsTooltip": "Switch month names",
+    "monthsOrderSuccess": "Great job! You've ordered the months correctly.",
+    "playAgain": "Play Again",
+    "all": "all",
+    "monthsOrderList": "يناير, فبراير, مارس, أبريل, مايو, يونيو, يوليو, أغسطس, سبتمبر, أكتوبر, نوفمبر, ديسمبر",
+    "@monthsOrderList": {
+        "description": "Always Arabic month names for the months ordering game."
+    },
+    "monthsOrderLevelInstruction": "Level {level}: Order {count} months {direction}",
+    "@monthsOrderLevelInstruction": {
+        "description": "Instruction for each level showing how many months to order and in which direction",
+        "placeholders": {
+            "level": {},
+            "count": {},
+            "direction": {}
+        }
+    },
+    "orderAscending": "from first to last",
+    "orderDescending": "from last to first",
+    "levelSuccess": "🎉 Amazing! You've completed level {level}!",
+    "@levelSuccess": {
+        "description": "Success message when completing a level",
+        "placeholders": {
+            "level": {}
+        }
+    },
+    "levelFailure": "Don't worry! Practice makes perfect. Try this level again!",
+    "levelRetry": "Keep going! You're getting better with each try!",
+    "finalLevelSuccess": "🌟 Incredible! You've mastered all month orders!",
+    "gameCompleted": "Completed!",
+    "orderMonthsCorrectly": "Order the months correctly.",
+    "learnerNavBarHome": "Home",
+    "learnerNavBarCourses": "Courses",
+    "learnerNavBarProfile": "Profile",
+    "learnerNavBarMenu": "Menu",
+    "logoutSubtitle": "Sign out securely",
+    "cancelButton": "cancel",
+    "logoutConfirmationTitle": "Logout Confirmation",
+    "logoutConfirmationMessage": "Are you sure you want to logout?\nYou will need to sign in again.",
+    "logoutButton": "Logout",
+    "chooseLanguageTitle": "Choose Language",
+    "chooseLanguageSubtitle": "Select your preferred language",
+    "englishLanguage": "English",
+    "arabicLanguage": "العربية",
+    "defaultUserName": "User",
+    "defaultUsername": "username",
+    "appTitle": "Object Detection Exercise",
+    "bringObject": "Bring a {object}",
+    "@bringObject": {
+        "placeholders": {
+            "object": {
+                "type": "String"
+            }
+        }
+    },
+    "objectDetectionExercise": "Object Detection Exercise",
+    "objectDetectionHint": "Point your camera at the requested object to complete the exercise",
+    "hint": "Point your camera at the requested object to complete the exercise",
+    "spoon": "spoon",
+    "cup": "cup",
+    "pen": "pen",
+    "fork": "fork",
+    "plate": "plate",
+    "objectDetected": "Great! Object detected!",
+    "objectNotFound": "Object not detected. Keep trying!",
+    "nextExercise": "Next Exercise",
+    "score": "Score: {score}",
+    "@score": {
+        "placeholders": {
+            "score": {
+                "type": "int"
+            }
+        }
+    },
+    "loadingWords": "Loading words...",
+    "@loadingWords": {
+        "description": "Message shown while fetching words from the server"
+    },
+    
+    "allWordsCompleted": "Great job! You've completed all words!",
+    "@allWordsCompleted": {
+        "description": "Success message when user finishes all words in the exercise"
+    },
+    
+    "congratulations": "Congratulations!",
+    "@congratulations": {
+        "description": "Title for completion dialog"
+    },
+    
+    "completedAllWords": "You have successfully completed all words in this exercise!",
+    "@completedAllWords": {
+        "description": "Message in completion dialog explaining the achievement"
+    },
+    
+    "finish": "Finish",
+    "@finish": {
+        "description": "Button text to finish the exercise and go back"
+    },
+    
+    "startOver": "Start Over",
+    "@startOver": {
+        "description": "Button text to restart the exercise with the same words"
+    },
+    
+    "viewResults": "View Results",
+    "@viewResults": {
+        "description": "Button text when all words are completed to view final results"
+    },
+    "locked": "Locked",
+    "@locked": {
+        "description": "Text shown when a game is locked"
+    },
+    "gameLockedMessage": "This game is locked. Complete previous levels to unlock it.",
+    "@gameLockedMessage": {
+        "description": "Message shown when user tries to access a locked game"
+    },
+    "level_one_live_camera": "Level One - Live Camera",
+    "@level_one_live_camera": {
+        "description": "Title for level one live camera screen"
+    },
+    "new_word": "New Word",
+    "@new_word": {
+        "description": "Button text for getting a new word"
+    },
+    "target_word": "Target Word",
+    "@target_word": {
+        "description": "Label for the target word section"
+    },
+    "analyzing": "Analyzing...",
+    "@analyzing": {
+        "description": "Text shown when analyzing the camera input"
+    },
+    "preparing_camera": "Preparing Camera...",
+    "@preparing_camera": {
+        "description": "Text shown when initializing the camera"
+    },
+    "result": "Result",
+    "@result": {
+        "description": "Label for the detection result"
+    },
+    "correct_answer": "Correct Answer! Well Done!",
+    "@correct_answer": {
+        "description": "Text shown when the answer is correct"
+    },
+    "try_again": "Try Again",
+    "@try_again": {
+        "description": "Text shown when the answer is incorrect"
+    },
+    "point_camera_instruction": "Point the camera towards the target object within the red frame",
+    "@point_camera_instruction": {
+        "description": "Instruction for pointing the camera at the target object"
+    },
+    "processing": "Processing",
+    "@processing": {
+        "description": "Status text when processing"
+    },
+    "ready_to_capture": "Ready to Capture",
+    "@ready_to_capture": {
+        "description": "Status text when ready to capture"
+    },
+    "errorReadingResult": "❌ Error reading result",
+    "congratsAllWordsCompleted": "Well done! You've completed all the words.",
+    "learnerIdRequired": "Learner ID is required",
+    "@learnerIdRequired": {
+        "description": "Error message when learner ID is missing"
+    },
+    
+    "profileDataLoadError": "Some profile data could not be loaded",
+    "@profileDataLoadError": {
+        "description": "Error message when profile data fails to load"
+    },
+    
+    "profileInformation": "Profile Information",
+    "@profileInformation": {
+        "description": "Title for profile information section"
+    },
+    
+    "email": "Email",
+    "@email": {
+        "description": "Label for email field"
+    },
+    
+    "age": "Age",
+    "@age": {
+        "description": "Label for age field"
+    },
+    
+    "gender": "Gender",
+    "@gender": {
+        "description": "Label for gender field"
+    },
+    
+    "notProvided": "Not provided",
+    "@notProvided": {
+        "description": "Text shown when information is not available"
+    },
+    
+    "learningJourney": "Learning Journey",
+    "@learningJourney": {
+        "description": "Title for learning statistics section"
+    },
+    
+    "totalTime": "Total Time",
+    "@totalTime": {
+        "description": "Label for total time spent learning"
+    },
+    
+    "achievement": "Achievement",
+    "@achievement": {
+        "description": "Label for achievement level"
+    },
+    
+    "personalDetails": "Personal Details",
+    "@personalDetails": {
+        "description": "Title for personal details section"
+    },
+    
+    "birthDate": "Birth Date",
+    "@birthDate": {
+        "description": "Label for birth date field"
+    },
+    
+    "parentName": "Parent Name",
+    "@parentName": {
+        "description": "Label for parent name field"
+    },
+    
+    "loadingProfile": "Loading Profile...",
+    "@loadingProfile": {
+        "description": "Loading message for profile"
+    },
+    
+    "failedToLoadProfile": "Failed to load profile",
+    "@failedToLoadProfile": {
+        "description": "Error message when profile loading fails"
+    },
+    
+    
+    "profileNotFound": "Profile not found",
+    "@profileNotFound": {
+        "description": "Message when profile is not found"
+    },
+    
+    "yearsOld": "{age} years old",
+    "@yearsOld": {
+        "description": "Format for displaying age",
+        "placeholders": {
+        "age": {
+            "type": "int",
+            "example": "25"
+        }
+        }
+    },
+    
+    "unknown": "Unknown",
+    "@unknown": {
+        "description": "Text for unknown values"
+    },
+    
+    "minutesFormat": "{minutes}m",
+    "@minutesFormat": {
+        "description": "Format for displaying minutes",
+        "placeholders": {
+        "minutes": {
+            "type": "int",
+            "example": "30"
+        }
+        }
+    },
+    
+    "hoursMinutesFormat": "{hours}h {minutes}m",
+    "@hoursMinutesFormat": {
+        "description": "Format for displaying hours and minutes",
+        "placeholders": {
+        "hours": {
+            "type": "int",
+            "example": "2"
+        },
+        "minutes": {
+            "type": "int",
+            "example": "30"
+        }
+        }
+    },
+    "explorer": "Explorer",
+    "@explorer": {
+        "description": "Achievement level title for beginners with 0 minutes"
+    },
+    
+    "risingStar": "Rising Star",
+    "@risingStar": {
+        "description": "Achievement level title for users with less than 1 hour of learning"
+    },
+    
+    "brightMind": "Bright Mind",
+    "@brightMind": {
+        "description": "Achievement level title for users with less than 5 hours of learning"
+    },
+    
+    "knowledgeSeeker": "Knowledge Seeker",
+    "@knowledgeSeeker": {
+        "description": "Achievement level title for users with less than 10 hours of learning"
+    },
+    
+    "wisdomBuilder": "Wisdom Builder",
+    "@wisdomBuilder": {
+        "description": "Achievement level title for users with less than 20 hours of learning"
+    },
+    
+    "masterLearner": "Master Learner",
+    "@masterLearner": {
+        "description": "Achievement level title for users with less than 40 hours of learning"
+    },
+    
+    "learningChampion": "Learning Champion",
+    "@learningChampion": {
+        "description": "Achievement level title for users with 40+ hours of learning"
+    }
+
+}
