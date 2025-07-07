@@ -1,37 +1,103 @@
-# .github/workflows/dart.yml
-name: Dart CI
+name: iOS-ipa-build
 
 on:
-  push:
-    branches: [ main ]            # adjust if you use other branch names
-    paths:
-      - '**/*.dart'
-      - 'pubspec.yaml'
-  pull_request:
-    paths:
-      - '**/*.dart'
-      - 'pubspec.yaml'
+  workflow_dispatch:
 
 jobs:
-  analyze_and_test:
-    runs-on: ubuntu-latest
-
-    # Uses CirrusLabs’ Docker image with the stable Flutter SDK pre-installed
-    container:
-      image: ghcr.io/cirruslabs/flutter:stable
+  build-ios:
+    name: "🎉  iOS Build"
+    runs-on: macos-latest
 
     steps:
-      # 1 Check out the code
+      # 1 Check out code
       - uses: actions/checkout@v3
 
-      # 2 Install Dart/Flutter dependencies
-      - name: Install dependencies
-        run: flutter pub get
+      # 2 Install Flutter stable
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          architecture: x64
 
-      # 3 Static analysis (fails on any warning)
-      - name: Run flutter analyze
-        run: flutter analyze --no-fatal-on-hints
+      # 3 Clean + pub get
+      - name: Flutter clean / pub get
+        run: |
+          flutter clean
+          flutter pub get
+        working-directory: mobileapp
 
-      # 4 Run unit / widget tests (if you have them)
-      - name: Run tests
-        run: flutter test
+      # 4 Reset Pods + make sure platform :ios, '13.0'
+      - name: Prepare iOS folder
+        run: |
+          cd ios
+          rm -rf Pods Podfile.lock
+          [ -f Podfile ] || pod init
+          if grep -q "^platform :ios" Podfile; then
+            sed -i '' "s/^platform :ios.*/platform :ios, '13.0'/" Podfile
+          else
+            sed -i '' '1s/^/platform :ios, '\''13.0'\''\n/' Podfile
+          fi
+        working-directory: mobileapp
+
+      # 5 Make Podfile use static frameworks + Swift 5.9
+      - name: Patch Podfile
+        run: |
+          cd mobileapp/ios
+
+          # ----------  force static frameworks  ----------
+          if grep -q "use_frameworks!" Podfile; then
+            sed -i '' "s/use_frameworks!.*/use_frameworks! :linkage => :static/" Podfile
+          else
+            sed -i '' "/target 'Runner' do/a\\
+  use_frameworks! :linkage => :static" Podfile
+          fi
+
+          # ----------  add modular headers if missing  ----------
+          grep -q "use_modular_headers!" Podfile || \
+            sed -i '' "/use_frameworks! :linkage => :static/a\\
+  use_modular_headers!" Podfile
+
+          # ----------  replace any existing post_install  ----------
+          sed -i '' '/post_install do/,/^end$/d' Podfile
+          {
+            echo
+            echo "post_install do |installer|"
+            echo "  installer.pods_project.targets.each do |t|"
+            echo "    t.build_configurations.each do |c|"
+            echo "      c.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'"
+            echo "      c.build_settings['SWIFT_VERSION']              = '5.9'"
+            echo "    end"
+            echo "  end"
+            echo "end"
+          } >> Podfile
+
+          echo "=== Final Podfile ==="
+          cat Podfile
+
+      # 6 Install pods
+      - run: pod install --repo-update
+        working-directory: mobileapp/ios
+
+      # 7 Build unsigned release
+      - run: flutter build ios --release --no-codesign
+        working-directory: mobileapp
+
+      # 8 Package Runner.app → IPA
+      - name: Package IPA
+        run: |
+          cd build/ios/iphoneos
+          mkdir -p Payload
+          mv Runner.app Payload/
+          zip -r FlutterIpaExport.ipa Payload
+        working-directory: mobileapp
+
+      # 9 Attach IPA to a GitHub Release
+      - name: Upload IPA to GitHub Release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: mobileapp/build/ios/iphoneos/FlutterIpaExport.ipa
+          asset_name: FlutterIpaExport.ipa
+          tag: ios-build-${{ github.run_number }}
+          overwrite: true
+          body: |
+            🎉 Unsigned iOS IPA for run #${{ github.run_number }}
