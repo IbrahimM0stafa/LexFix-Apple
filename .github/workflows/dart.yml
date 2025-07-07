@@ -20,8 +20,37 @@ jobs:
       - run: flutter pub get
         working-directory: mobileapp
 
-      # Update CocoaPods in the ios folder
+      # Clean iOS build artifacts
+      - run: flutter clean
+        working-directory: mobileapp
+
+      # Remove old pods and Podfile.lock
+      - run: rm -rf Pods Podfile.lock
+        working-directory: mobileapp/ios
+
+      # Ensure Podfile exists
+      - name: Ensure Podfile exists
+        run: |
+          cd mobileapp/ios
+          if [ ! -f Podfile ]; then
+            pod init
+          fi
+
+      # Patch Podfile to set iOS platform 12.0
+      - name: Patch Podfile platform version
+        run: |
+          cd mobileapp/ios
+          if grep -q "platform :ios" Podfile; then
+            sed -i '' "s/platform :ios.*/platform :ios, '12.0'/" Podfile
+          else
+            echo "platform :ios, '12.0'" >> Podfile
+          fi
+
+      # Update CocoaPods repo & install pods
       - run: pod repo update
+        working-directory: mobileapp/ios
+
+      - run: pod install
         working-directory: mobileapp/ios
 
       # Build iOS app (no signing)
@@ -52,4 +81,4 @@ jobs:
           tag: ios-build-${{ github.run_number }}
           overwrite: true
           body: |
-            iOS IPA build artifact for run #${{ github.run_number }}
+            🎉 iOS IPA build artifact for run #${{ github.run_number }}
