@@ -36,8 +36,8 @@ jobs:
             pod init
           fi
 
-      # Patch Podfile to set iOS platform 12.0
-      - name: Patch Podfile platform version
+      # Patch Podfile to set iOS platform 12.0 and fix Firebase pod versions
+      - name: Patch Podfile
         run: |
           cd mobileapp/ios
           if grep -q "platform :ios" Podfile; then
@@ -45,6 +45,25 @@ jobs:
           else
             echo "platform :ios, '12.0'" >> Podfile
           fi
+
+          echo "
+          post_install do |installer|
+            installer.pods_project.targets.each do |target|
+              target.build_configurations.each do |config|
+                config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.0'
+              end
+            end
+
+            installer.pod_targets.each do |pod|
+              if pod.name.eql?('FirebaseSharedSwift')
+                pod.version = '10.24.0'
+              end
+              if pod.name.eql?('FirebaseCoreInternal')
+                pod.version = '10.24.0'
+              end
+            end
+          end
+          " >> Podfile
 
       # Update CocoaPods repo & install pods
       - run: pod repo update
