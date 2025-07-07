@@ -71,21 +71,6 @@ jobs:
             echo "platform :ios, '13.0'" >> Podfile
           fi
           
-          # Add explicit pod version constraints before target
-          if ! grep -q "pod 'GoogleUtilities'" Podfile; then
-            # Create a temporary file with the pod constraints
-            cat > pod_constraints.txt << 'EOF'
-          # Explicit pod version constraints for compatibility
-          pod 'GoogleUtilities', '~> 8.0'
-          pod 'GoogleSignIn', '~> 8.0'
-          
-          EOF
-            
-            # Find the line with 'target' and insert the pod constraints before it
-            sed -i '' '/^target /r pod_constraints.txt' Podfile
-            rm pod_constraints.txt
-          fi
-          
           # Remove existing post_install if it exists and add our own
           if grep -q "post_install do" Podfile; then
             echo "Removing existing post_install hook..."
@@ -100,15 +85,6 @@ jobs:
               target.build_configurations.each do |config|
                 config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
                 config.build_settings['SWIFT_VERSION'] = '5.0'
-              end
-            end
-            # Force compatible GoogleUtilities version
-            installer.pods_project.targets.each do |target|
-              if target.name == 'GoogleUtilities'
-                target.build_configurations.each do |config|
-                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] ||= ['$(inherited)']
-                  config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'COCOAPODS=1'
-                end
               end
             end
           end
