@@ -41,11 +41,11 @@ jobs:
           
           # Check if post_install hook already exists
           if grep -q "post_install do" Podfile; then
-            # If it exists, modify the existing one
-            # First, remove the existing 'end' for post_install
-            sed -i '' '/post_install do/,/^end$/{ /^end$/d; }' Podfile
+            echo "Existing post_install hook found, modifying..."
+            # Remove the existing 'end' for post_install and add our config
+            sed -i '' '/post_install do/,/^end$/{/^end$/d;}' Podfile
             
-            # Add our additional configuration before the final end
+            # Add our additional configuration
             cat >> Podfile << 'EOF'
             
             # Set deployment target for all pods
@@ -67,7 +67,7 @@ jobs:
           end
 EOF
           else
-            # If no post_install exists, create a new one
+            echo "No post_install hook found, creating new one..."
             cat >> Podfile << 'EOF'
           
 post_install do |installer|
